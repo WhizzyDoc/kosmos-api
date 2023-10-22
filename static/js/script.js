@@ -19,4 +19,51 @@ $(document).ready(function() {
         //alert(val)
         $(this).parent('.code-header').siblings('pre').children(val).show();
     })
+
+    $('.post-test-btn').click(function() {
+        var url = `http://127.0.0.1:8000/api/v1/profile/authentication/`;
+        const token = 'c29d232d50ca7ee6cfb3eff1ff4610bb43e0ba1a';
+        const formData = new FormData()
+        //formData.append('api_token', token)
+        formData.append('username', 'Irnman')
+        formData.append('password', 'tonystark')
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                //'Authorization': `Token ${token}`
+            },
+            body: formData
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    })
+
+    $('.get-test-btn').click(function() {
+        var url = `http://127.0.0.1:8000/api/v1/site/get_site_info/`;
+        
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .then(res => {
+            return res.json();
+        })
+        .then(data => {
+            console.log(data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    })
 })
