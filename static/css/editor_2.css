@@ -99,7 +99,7 @@ code[class*="language-"] {
   color: #aaa;
 }
 .token.punctuation {
-  opacity: .7;
+  opacity: 1;
 }
 .token.property, .token.tag, .toke.boolean, .token.number, .token.constant, .token.symbol {
   color: #0cf;
