@@ -343,23 +343,23 @@ axios.get(url, {
           </section>
 
           <!-- Edit site info -->
-          <section id="get_site_info" class="w-card w-padding">
-            <h5 class="w-bold-x mb-3">Get Site/Company Details</h5>
+          <section id="edit_site_info" class="w-card w-padding">
+            <h5 class="w-bold-x mb-3">Edit Site/Company Details</h5>
 
             <div class="table-responsive">
               <table class="table">
                 <tbody>
                   <tr>
                     <td>Method</td>
-                    <td>GET</td>
+                    <td>POST</td>
                   </tr>
                   <tr>
                     <td>URL</td>
-                    <td>https://kosmos.pythonanywhere.com/api/v1/site/get_site_info/</td>
+                    <td>https://kosmos.pythonanywhere.com/api/v1/site/edit_site_info/</td>
                   </tr>
                   <tr>
-                    <td>Parameters</td>
-                    <td>None</td>
+                    <td>Authorization</td>
+                    <td>API Token</td>
                   </tr>
                 </tbody>
               </table>
@@ -376,11 +376,13 @@ axios.get(url, {
 </div>            
 <pre aria-hidden="true">
 <code class="language-javascript highlighting-content fetch">
-var url = 'https://kosmos.pythonanywhere.com/api/v1/site/get_site_info/';
+var url = 'https://kosmos.pythonanywhere.com/api/v1/site/edit_site_info/';
+const token = 'your-api-token';
 fetch(url, {
-  method: 'GET',
+  method: 'POST',
   headers: {
     'Accept': 'application/json',
+    'Authorization': `Token ${token}`
   }
 })
 .then(response => {
