@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="title" content="KosmosHR Documentation" />
+        <meta name="description" content="A platform that provides solution to HR challenges"/> 
+        <meta name="author" content="Team Inventus" />
+        <meta name="keywords" content="" />
+        <link rel="shortcut icon" href="" />
+        <link rel="shortcut" href="" />
+        <link rel="apple-touch-icon" href="" />
+        <title>Documentation - Employee</title>
+        <link rel="stylesheet" href="lib/prism.css" />
+        <link rel="stylesheet" href="lib/prism2.css" />
+        <link rel="stylesheet" href="lib/codemirror.css">
+        <script src="lib/codemirror.js"></script>
+        <script src="lib/codemirror_jsx.js"></script>
+        <link rel="stylesheet" href="static/css/editor_2.css" />
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+        <link rel="stylesheet" href="static/css/rigan.css" />
+        <link rel="stylesheet" href="static/css/fontawesome.css" />
+        <link rel="stylesheet" href="static/css/sweetalert.min.css" />
+        <link rel="stylesheet" href="static/css/style.css">
+        <script src="static/js/jquery.min.js"></script>
+        <script src="static/js/popper.min.js"></script>
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/sweetalert.min.js"></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark sticky-top">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">API Documentation</a>
+          
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+              <ul class="navbar-nav">
+                <li class="nav-item">
+                  <a class="nav-link" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="admin.html">Admin</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="employee.html">Employee</a>
+                </li>
+              </ul>
+            </div>
+        </nav>
+
+        <main class="w-padding-top">
+          <form class="mb-2">
+            <select class="api-option custom-select">
+              <option disabled selected>Search API menu for employee</option>
+              <option value="get_site_info">Get site/company information</option>
+            </select>
+          </form>
+
+          <section id="get_site_info" class="w-card w-padding">
+            <h5 class="w-bold-x mb-3">Get Site/Company Details</h5>
+
+            <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Method</td>
+                    <td>GET</td>
+                  </tr>
+                  <tr>
+                    <td>URL</td>
+                    <td>https://kosmos.pythonanywhere.com/api/v1/site/get_site_info/</td>
+                  </tr>
+                  <tr>
+                    <td>Parameters</td>
+                    <td>None</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+<section>
+<div class="code-header">
+  <div>Request</div>
+  <select class="lang-sel">
+    <option selected value="fetch">Fetch API</option>
+    <option value="ajax">AJAX</option>
+    <option value="axios">Axios</option>
+  </select>
+</div>            
+<pre aria-hidden="true">
+<code class="language-javascript highlighting-content fetch">
+var url = 'https://kosmos.pythonanywhere.com/api/v1/site/get_site_info/';
+fetch(url, {
+  method: 'GET',
+  headers: {
+    'Accept': 'application/json',
+  }
+})
+.then(response => {
+   return response.json() // convert response to json
+})
+.then(data => {
+  console.log(data)
+})
+</code>
+<code class="language-javascript highlighting-content ajax">
+var url = 'https://kosmos.pythonanywhere.com/api/v1/site/get_site_info/';
+$.ajax({
+  type: 'GET',
+  url: url,
+  dataType: 'json',
+  headers: {
+    'Accept': 'application/json',
+  },
+  success: function(data) {
+    // Handle the JSON response
+    console.log(data);
+  }
+})
+</code>
+<code class="language-javascript highlighting-content axios">
+// import axios if you're using a module system
+const axios = require('axios');
+
+var url = 'https://kosmos.pythonanywhere.com/api/v1/site/get_site_info/';
+
+axios.get(url, {
+  headers: {
+    'Accept': 'application/json'
+  }
+})
+.then(response => {
+  // Handle the json response
+  console.log(response.data);
+})
+</code>
+</pre>
+</section>
+
+<section>
+  <div class="code-header">
+    <div>Response</div>
+    <select class="res-sel">
+      <option selected value="success">success</option>
+      <option value="success-2">success-2</option>
+      <option value="error">error</option>
+    </select>
+  </div>            
+  <pre aria-hidden="true">
+  <code class="language-javascript highlighting-content success">
+  // when site information has been created
+  {
+    "status": "success",
+    "message": "site info fetched successfully",
+    "data": {
+      "title": "Kosmos",
+      "tagline": "Providing HR solutions",
+      "logo": "/media/site/logo/logo.png",
+      "about": "A platform for employee engagement",
+      "objectives": "&lt;p&gt;To improve the rate of employee engagement&lt;/p&gt;",
+      "mission": "",
+      "last_modified": "2023-10-21T23:27:58.587205Z"
+    }
+  }
+  </code>
+  <code class="language-javascript highlighting-content success-2">
+  // when site information has not been created
+  {
+    "status": "success",
+    "message": "site info not found"
+  }
+  </code>
+  <code class="language-javascript highlighting-content error">
+  // when an error occur while processing request
+  {
+    "status": "error",
+    "message": "error occured"
+  }
+  </code>
+  </pre>
+  </section>
+
+
+
+          </section>
+
+        </main>
+
+        <script src="static/js/script.js"></script>
+        <script src="static/js/editor_2.js"></script>
+    <script src="lib/prism.js"></script>
+    <script src="lib/prism1.js"></script>
+    <script src="lib/prism2.js"></script>
+    </body>
+</html>

@@ -1,0 +1,313 @@
+/* * {
+  font-family: "Fira Code", monospace;
+}*/
+
+
+
+/* The side navigation menu */
+.sidenav {
+  height: 95vh; /* 100% Full-height */
+  overflow-y: scroll;
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 3; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 40px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 10px;
+  text-decoration: none;
+  font-size: 17px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+.sidenav button {
+  padding: 10px;
+  outline:none;
+  text-align:center;
+  width: 100%;
+  position: relative;
+  background:transparent;
+  font-size: 17px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+.sidenav button:hover {
+  background: green;
+  color: white;
+  box-shadow:0 12px 16px 0 rgba(0,0,0,0.5), 0 17px 50px 0 rgba(0,0,0,0.5);
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a {
+  text-decoration: none;
+  outline: none;
+  display: block;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.container {
+  width:100%;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+  align-items: center;
+  background: black;
+}
+
+.editor {
+  display: inline-flex;
+  min-width: 95%;
+  font-family: monospace;
+  line-height: 25px;
+  background: #222;
+  border-radius: 2px;
+  padding: 20px 10px;
+  font-size: 15px;
+}
+
+textarea, #highlighting, #highlighting-c, #highlighting-j {
+  padding-left: 10px;
+  min-height: 1000000000px;
+  border: none;
+  width: 90%;
+  white-space: nowrap;
+  outline: none;
+  resize: none;
+}
+textarea, #highlighting, #highlighting-c, #highlighting-j, #highlighting *, #highlighting-c *, #highlighting-j * {
+  font-size: 15px;
+  line-height: 25px;
+  tab-size: 2;
+  font-family: monospace;
+}
+/*textarea {
+  position: relative;
+}*/
+textarea, #highlighting, #highlighting-c, #highlighting-j {
+  position: absolute;
+  top: 80px;
+  left: calc(5% + 50px);
+}
+/*textarea in front of the result*/
+textarea {z-index: 1; resize: none}
+#highlighting, #highlighting-c, #highlighting-j {z-index: 0; padding:0; padding-left:10px;}
+
+textarea {
+  color: transparent;
+  padding-top: 8px;
+  background: transparent;
+  caret-color: white;
+  outline: none;
+}
+
+textarea::placeholder {
+  font-size: 30px;
+  text-align: center;
+}
+.line-numbers, .line-numbers1, .line-numbers2 {
+  width: 5%;
+  text-align: right;
+  position: sticky;
+  position: -webkit-sticky;
+  left: 0;
+}
+
+.line-numbers span, .line-numbers1 span, .line-numbers2 span {
+  counter-increment: linenumber;
+  display: block;
+}
+
+.line-numbers span::before, .line-numbers1 span::before, .line-numbers2 span::before {
+  content: counter(linenumber);
+  display: block;
+  color: #506882;
+}
+
+iframe {
+  bottom: 0;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  border: none;
+  background: white;
+}
+
+button {
+  padding: 8px;
+  font-size: 15px;
+  outline: none;
+  border: none;
+  background: green;
+  color:white;
+  cursor:pointer;
+  margin: 0 5px 5px 5px;
+}
+#showHtml {
+  background: red;
+}
+
+button a {
+  text-decoration: none;
+  outline: none;
+  color: white;
+}
+
+.h1 {
+  color: white;
+  font-size: 30px;
+  font-weight: 600;
+}
+h3, .h3 {
+  color:white;
+  font-weight:600;
+  font-size: 20px;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#result {
+  display: none;
+}
+#header {
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index:2;
+}
+#css1, #js1 {
+  display: none;
+}
+#editor {
+    padding-bottom: 45px;
+    
+}
+#html_short, #css_short, #js_short {
+    position: fixed;
+    bottom: 2px;
+    left: 0;
+    overflow: scroll;
+    background: #222;
+    padding: 5px;
+    width: 100%;
+    height: 65px;
+     
+}
+#html_short > div, #css_short > div, #js_short > div {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+}
+
+.but2 > button {
+    padding: 5px 11px;
+    background: white;
+    color: black;
+    border-radius: 5px;
+    font-size: 12px;
+    margin: 2px;
+    font-weight: 600;
+}
+.but > button  {
+    padding: 5px 10px;
+    background: grey;
+    color: white;
+    border-radius: 8px;
+    font-size: 12px;
+    margin:2px;
+}
+#css_short > .but2 > button {
+  padding: 5px 18px;
+}
+#css_short, #js_short {display: none}
+@media only screen and (min-width: 821px) {
+  #html_short, #css_short, #js_short {
+    display: none !important;
+  }
+}
+
+.about, .manual, .save {
+  position:  fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  padding: 10px;
+  background: #2b2a2a;
+  border-radius: 20px;
+  color: white;
+  z-index: 2;
+  box-shadow:0 16px 24px 0 rgba(0,0,0,0.5), 0 25px 55px 0 rgba(0,0,0,0.5);
+  -webkit-animation:animatezoom 0.6s;
+  animation:animatezoom 0.6s;
+}
+@-webkit-keyframes animatezoom {
+  from {width: 0px;opacity:0;}
+  to{width: 280px;opacity:1;}
+}
+@keyframes animatezoom {
+  from {
+    width: 0px;
+    opacity: 0;
+  }
+  to{
+    width: 280px;
+    opacity: 1;
+  }
+}
+.about table {
+  width: 100%;
+}
+td {
+  text-align: left;
+  color: white;
+  padding: 10px 5px;
+}
+.about table tr td:nth-of-type(1) {
+  font-weight: 600;
+}
+#ok, #no {
+  color: white;
+  font-weight: 600;
+  margin-right:20px;
+  margin-bottom: 10px;
+  border: 2px solid white;
+}
+#ok {
+  float:right;
+  background: red;
+}
+#no {
+  float:left;
+  background: green;
+}
+#about, #manual, #save {
+  display: none;
+}
+.manual ul {
+  text-align: left;
+  font-weight: lighter;
+  line-height: 1.5;
+}
+#manual {
+  width: 300px;
+  max-height: 95%;
+  overflow-y: scroll;
+}
