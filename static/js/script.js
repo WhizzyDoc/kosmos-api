@@ -21,19 +21,24 @@ $(document).ready(function() {
     })
 
     $('.post-test-btn').click(function() {
-        var url = `http://127.0.0.1:8000/api/v1/profile/authentication/`;
+        var url = `http://127.0.0.1:8000/api/v1/profile/create_account/`;
         const token = 'c29d232d50ca7ee6cfb3eff1ff4610bb43e0ba1a';
-        const formData = new FormData()
-        //formData.append('api_token', token)
-        formData.append('username', 'Irnman')
-        formData.append('password', 'tonystark')
+        // headers
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        }
+        // form data to be created
+        const formData = JSON.stringify({
+            email: "janefoster@gmail.com",
+            first_name: "Jane",
+            last_name: "Foster",
+            account_type: "employee" // can either be "admin" or "employee"
+        })
 
-        fetch(url, {
+        fetch(ur, {
             method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                //'Authorization': `Token ${token}`
-            },
+            headers: headers,
             body: formData
         })
         .then(res => {

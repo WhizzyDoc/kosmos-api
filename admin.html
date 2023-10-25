@@ -60,8 +60,8 @@
               <option value="get_site_info">Get site/company information</option>
               <option value="create_site_info">Create site/company information</option>
               <option value="edit_site_info">Edit site/company information</option>
-              <option value="authentication">Login</option>
-              <option value="get_admin_profile">Get Admin Profile</option>
+              <option value="create_account">Create Account</option>
+              <option value="register">Register User</option>
             </select>
           </form>
 
@@ -87,56 +87,29 @@
 <div class="code-header">
   <div>Request</div>
   <select class="lang-sel">
-    <option selected value="fetch">Fetch API</option>
-    <option value="ajax">AJAX</option>
-    <option value="axios">Axios</option>
+    <option selected value="axios">Axios</option>
   </select>
 </div>            
 <pre aria-hidden="true">
-<code class="language-javascript highlighting-content fetch">
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/get_site_info/';
-fetch(url, {
-  method: 'GET',
-  headers: {
-    'Accept': 'application/json',
-  }
-})
-.then(response => {
-   return response.json() // convert response to json
-})
-.then(data => {
-  console.log(data)
-})
-</code>
-<code class="language-javascript highlighting-content ajax">
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/get_site_info/';
-$.ajax({
-  type: 'GET',
-  url: url,
-  dataType: 'json',
-  headers: {
-    'Accept': 'application/json',
-  },
-  success: function(data) {
-    // Handle the JSON response
-    console.log(data);
-  }
-})
-</code>
 <code class="language-javascript highlighting-content axios">
 // import axios if you're using a module system
 const axios = require('axios');
 
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/get_site_info/';
+const url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/get_site_info/';
+const headers = {
+  'Accept': 'application/json'
+}
 
 axios.get(url, {
-  headers: {
-    'Accept': 'application/json'
-  }
+  headers: headers
 })
 .then(response => {
   // Handle the json response
-  console.log(response.data);
+  console.log(response);
+})
+.catch(error => {
+  // Handle the error
+  console.error('Error: ', error);
 })
 </code>
 </pre>
@@ -216,69 +189,25 @@ axios.get(url, {
 <div class="code-header">
   <div>Request</div>
   <select class="lang-sel">
-    <option selected value="fetch">Fetch API</option>
-    <option value="ajax">AJAX</option>
-    <option value="axios">Axios</option>
+    <option selected value="axios">Axios</option>
   </select>
 </div>            
 <pre aria-hidden="true">
-<code class="language-javascript highlighting-content fetch">
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/create_site_info/';
-const token = 'your-api-token';
-const formData = JSON.stringify({
-  title: "KosmosHR",
-  tagline: "we provide solutions to HR problems",
-  objectives: "to ensure equal engagement",
-  mission: "to ensure equal engagement",
-  about: "A platform to HR employee",
-  logo: "" // an image file
-})
-fetch(url, {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': `Token ${token}`
-  },
-  body: formData
-})
-.then(response => {
-   return response.json() // convert response to json
-})
-.then(data => {
-  console.log(data)
-})
-</code>
-<code class="language-javascript highlighting-content ajax">
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/create_site_info/';
-const token = 'your-api-token';
-const formData = JSON.stringify({
-  title: "KosmosHR",
-  tagline: "we provide solutions to HR problems",
-  objectives: "to ensure equal engagement",
-  mission: "to ensure equal engagement",
-  about: "A platform to HR employee",
-  logo: "" // an image file
-})
-$.ajax({
-  type: 'POST',
-  url: url,
-  dataType: 'json',
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': `Token ${token}`
-  },
-  success: function(data) {
-    // Handle the JSON response
-    console.log(data);
-  }
-})
-</code>
 <code class="language-javascript highlighting-content axios">
 // import axios if you're using a module system
 const axios = require('axios');
 
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/create_site_info/';
+const url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/create_site_info/';
 const token = 'your-api-token';
+
+// headers
+const headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': `Token ${token}`
+}
+
+// form data to be created
 const formData = JSON.stringify({
   title: "KosmosHR",
   tagline: "we provide solutions to HR problems",
@@ -288,15 +217,18 @@ const formData = JSON.stringify({
   logo: "" // an image file
 })
 
-axios.get(url, {
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': `Token ${token}`
-  }
+// make the request
+axios.post(url, formData, {
+  headers: headers,
+
 })
 .then(response => {
   // Handle the json response
-  console.log(response.data);
+  console.log(response);
+})
+.catch(error => {
+  // Handle the error
+  console.error('Error: ', error);
 })
 </code>
 </pre>
@@ -308,6 +240,7 @@ axios.get(url, {
     <select class="res-sel">
       <option selected value="success">success</option>
       <option value="error">error</option>
+      <option value="error-2">error-2</option>
     </select>
   </div>            
   <pre aria-hidden="true">
@@ -327,7 +260,6 @@ axios.get(url, {
     }
   }
   </code>
-  
   <code class="language-javascript highlighting-content error">
   // when an error occur while processing request
   {
@@ -335,6 +267,13 @@ axios.get(url, {
     "message": "error occured"
   }
   </code>
+  <code class="language-javascript highlighting-content error-2">
+    // when a GET request is used instead
+    {
+      "status": "error",
+      "message": "GET method not allowed"
+    }
+    </code>
   </pre>
   </section>
 
@@ -369,58 +308,42 @@ axios.get(url, {
 <div class="code-header">
   <div>Request</div>
   <select class="lang-sel">
-    <option selected value="fetch">Fetch API</option>
-    <option value="ajax">AJAX</option>
-    <option value="axios">Axios</option>
+    <option selected value="axios">Axios</option>
   </select>
 </div>            
 <pre aria-hidden="true">
-<code class="language-javascript highlighting-content fetch">
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/edit_site_info/';
-const token = 'your-api-token';
-fetch(url, {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Authorization': `Token ${token}`
-  }
-})
-.then(response => {
-   return response.json() // convert response to json
-})
-.then(data => {
-  console.log(data)
-})
-</code>
-<code class="language-javascript highlighting-content ajax">
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/get_site_info/';
-$.ajax({
-  type: 'GET',
-  url: url,
-  dataType: 'json',
-  headers: {
-    'Accept': 'application/json',
-  },
-  success: function(data) {
-    // Handle the JSON response
-    console.log(data);
-  }
-})
-</code>
 <code class="language-javascript highlighting-content axios">
 // import axios if you're using a module system
 const axios = require('axios');
 
-var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/get_site_info/';
+var url = 'https://kosmoshr.pythonanywhere.com/api/v1/site/edit_site_info/';
 
-axios.get(url, {
-  headers: {
-    'Accept': 'application/json'
-  }
+const token = 'your-api-token';
+
+// headers
+const headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json',
+  'Authorization': `Token ${token}`
+}
+
+// form data to be edited
+const formData = JSON.stringify({
+  mission: "to ensure equal engagement and employee happiness",
+  about: "A platform to HR employee and Departments alike"
+})
+
+// make the request
+axios.post(url, formData, {
+  headers: headers
 })
 .then(response => {
   // Handle the json response
-  console.log(response.data);
+  console.log(response);
+})
+.catch(error => {
+  // Handle the error
+  console.error('Error: ', error);
 })
 </code>
 </pre>
@@ -431,32 +354,26 @@ axios.get(url, {
     <div>Response</div>
     <select class="res-sel">
       <option selected value="success">success</option>
-      <option value="success-2">success-2</option>
       <option value="error">error</option>
+      <option value="error-2">error-2</option>
+      <option value="error-3">error-3</option>
     </select>
   </div>            
   <pre aria-hidden="true">
   <code class="language-javascript highlighting-content success">
-  // when site information has been created
+  // when site information has been edited
   {
     "status": "success",
-    "message": "site info fetched successfully",
+    "message": "site info edited successfully",
     "data": {
-      "title": "Kosmos",
-      "tagline": "Providing HR solutions",
-      "logo": "/media/site/logo/logo.png",
-      "about": "A platform for employee engagement",
-      "objectives": "&lt;p&gt;To improve the rate of employee engagement&lt;/p&gt;",
-      "mission": "",
+      "title": "KosmosHR",
+      "tagline": "we provide solutions to HR problems",
+      "logo": "",
+      "about": "A platform to HR employee and Departments alike",
+      "objectives": "to ensure equal engagement",
+      "mission": "to ensure equal engagement and employee happiness",
       "last_modified": "2023-10-21T23:27:58.587205Z"
     }
-  }
-  </code>
-  <code class="language-javascript highlighting-content success-2">
-  // when site information has not been created
-  {
-    "status": "success",
-    "message": "site info not found"
   }
   </code>
   <code class="language-javascript highlighting-content error">
@@ -466,6 +383,143 @@ axios.get(url, {
     "message": "error occured"
   }
   </code>
+  <code class="language-javascript highlighting-content error-2">
+    // when a GET request is used instead
+    {
+      "status": "error",
+      "message": "GET method not allowed"
+    }
+  </code>
+  <code class="language-javascript highlighting-content error-3">
+      // when site info does not exist
+      {
+        "status": "error",
+        "message": "site info not found"
+      }
+  </code>
+  </pre>
+  </section>
+
+
+          </section>
+
+          <!-- Create site info -->
+          <section id="create_account" class="w-card w-padding">
+            <h5 class="w-bold-x mb-3">Create An Account</h5>
+
+            <div class="table-responsive">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Method</td>
+                    <td>POST</td>
+                  </tr>
+                  <tr>
+                    <td>URL</td>
+                    <td>https://kosmoshr.pythonanywhere.com/api/v1/profile/create_account/</td>
+                  </tr>
+                  <tr>
+                    <td>Authorization</td>
+                    <td>None</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+<section>
+<div class="code-header">
+  <div>Request</div>
+  <select class="lang-sel">
+    <option selected value="axios">Axios</option>
+  </select>
+</div>            
+<pre aria-hidden="true">
+<code class="language-javascript highlighting-content axios">
+// import axios if you're using a module system
+const axios = require('axios');
+
+const url = 'https://kosmoshr.pythonanywhere.com/api/v1/profile/create_account/';
+
+// headers
+const headers = {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+}
+
+// form data to be created
+const formData = JSON.stringify({
+  email: "example@gmail.com",
+  first_name: "John",
+  last_name: "Doe",
+  account_type: "employee" // can either be "admin" or "employee"
+})
+
+// make the request
+axios.post(url, formData, {
+  headers: headers
+})
+.then(response => {
+  // Handle the json response
+  console.log(response);
+})
+.catch(error => {
+  // Handle the error
+  console.error('Error: ', error);
+})
+</code>
+</pre>
+</section>
+
+<section>
+  <div class="code-header">
+    <div>Response</div>
+    <select class="res-sel">
+      <option selected value="success">success</option>
+      <option value="error">error</option>
+      <option value="error-2">error-2</option>
+      <option value="error-3">error-3</option>
+    </select>
+  </div>            
+  <pre aria-hidden="true">
+  <code class="language-javascript highlighting-content success">
+  // when user account has been created
+  {
+    "status": "success",
+    "message": "Account created successfully. username is &apos;example@gmail.com&apos; and password is &apos;John&apos;", // can be changed after login
+    "data": {
+      "user": {
+        "id": 1,
+        "username": "example@gmail.com",
+        "email": "example@gmail.com",
+        "first_name": "John",
+        "last_name": "Doe",
+        "is_superuser": false,
+        "is_active": true
+      }
+    }
+  }
+  </code>
+  <code class="language-javascript highlighting-content error">
+  // when an error occur while processing request
+  {
+    "status": "error",
+    "message": "error while creating account"
+  }
+  </code>
+  <code class="language-javascript highlighting-content error-2">
+    // error due to existing email
+    {
+      "status": "error",
+      "message": "Email &apos;example@gmail&apos; has already been used, kindly use another email"
+    }
+    </code>
+    <code class="language-javascript highlighting-content error-3">
+      // error due to invalid email
+      {
+        "status": "error",
+        "message": "Invalid"
+      }
+      </code>
   </pre>
   </section>
 
