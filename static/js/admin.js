@@ -2545,8 +2545,315 @@ const admin = [
         "message": "Invalid news ID"
     }`,
   },
-    // template
+  // for Group Chat API
+  {
+    title: "Get All Group Chats",
+    value: "get_group_chats",
+    method: "GET",
+    url: "https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_group_chats/",
+    request: `
+    // import axios if you're using a module system
+    const axios = require('axios');
+    
+    const url = 'https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_group_chats/';
+    
+    // headers
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+    
+    // make the request
+    axios.get(url, {
+      headers: headers
+    })
+    .then(response => {
+      // Handle the json response
+      console.log(response);
+    })
+    .catch(error => {
+      // Handle the error
+      console.error('Error: ', error);
+    })`,
+    success_response: `
+    // if group chat list is found
     {
+      "status": "success",
+      "data": [
+        {
+          "id": 3,
+          "title": "Group Chat for Administration",
+          "department": {
+              "id": 3,
+              "title": "Administration"
+          },
+          "members": [
+              {
+                  "id": 6,
+                  "id_no": "kos0010",
+                  "first_name": "Peter",
+                  "last_name": "Parker",
+                  "email": "peterparker@gmail.com",
+                  "image": null
+              }
+          ],
+          "created": "2023-11-06T10:21:10.346875Z"
+        },
+        {
+          "id": 2,
+          "title": "Group Chat for Human Resources",
+          "department": {
+              "id": 2,
+              "title": "Human Resources"
+          },
+          "members": [
+              {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              }
+          ],
+          "created": "2023-11-06T10:20:45.899739Z"
+        },
+        {
+          "id": 1,
+          "title": "Group Chat for Sales",
+          "department": {
+              "id": 1,
+              "title": "Sales"
+          },
+          "members": [
+              {
+                  "id": 5,
+                  "id_no": "kos0009",
+                  "first_name": "Jane",
+                  "last_name": "Doe",
+                  "email": "janefoster@gmail.com",
+                  "image": "/media/profile/image/avatar-3.jpg"
+              }
+          ],
+          "created": "2023-11-06T10:20:24.728145Z"
+        }
+      ],
+      "message": "group chat list retrieved"
+    }
+    
+    //if no group chat is created yet
+    {
+        "status": "success",
+        "message": "No group chat found"
+    }`,
+    error_response: `
+    // error due to
+    {
+        "status": "error",
+        "message": "Error getting group chat list"
+    }`,
+  },
+  {
+    title: "Get Group Chat Details",
+    value: "get_group_chat_detail",
+    method: "GET",
+    url: "https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_group_chat/?group_chat_id=3",
+    request: `
+    // import axios if you're using a module system
+    const axios = require('axios');
+    
+    const url = 'https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_group_chat/?group_chat_id=3';
+    
+    // headers
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+    
+    // make the request
+    axios.get(url, {
+      headers: headers
+    })
+    .then(response => {
+      // Handle the json response
+      console.log(response);
+    })
+    .catch(error => {
+      // Handle the error
+      console.error('Error: ', error);
+    })`,
+    success_response: `
+    // if group chat is found
+    {
+      "status": "success",
+      "data": {
+          "id": 3,
+          "title": "Group Chat for Administration",
+          "department": {
+              "id": 3,
+              "title": "Administration"
+          },
+          "members": [
+              {
+                  "id": 6,
+                  "id_no": "kos0010",
+                  "first_name": "Peter",
+                  "last_name": "Parker",
+                  "email": "peterparker@gmail.com",
+                  "image": null
+              }
+          ],
+          "created": "2023-11-06T10:21:10.346875Z"
+      },
+      "message": "group chat details retrieved"
+    }`,
+    error_response: `
+    // error due to empty or invalid id
+    {
+        "status": "error",
+        "message": "Invalid group chat ID"
+    }`,
+  },
+  {
+    title: "Get Group Chat Members",
+    value: "get_group_chat_members",
+    method: "GET",
+    url: "https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_group_members/?group_chat_id=3",
+    request: `
+    // import axios if you're using a module system
+    const axios = require('axios');
+    
+    const url = 'https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_group_members/?group_chat_id=3';
+    
+    // headers
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+    
+    // make the request
+    axios.get(url, {
+      headers: headers
+    })
+    .then(response => {
+      // Handle the json response
+      console.log(response);
+    })
+    .catch(error => {
+      // Handle the error
+      console.error('Error: ', error);
+    })`,
+    success_response: `
+    // if group members are found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 6,
+              "id_no": "kos0010",
+              "first_name": "Peter",
+              "last_name": "Parker",
+              "email": "peterparker@gmail.com",
+              "image": null
+          }
+      ],
+      "message": "members list retrieved"
+  }`,
+    error_response: `
+    // error due to empty or invalid id
+    {
+        "status": "error",
+        "message": "Invalid group chat ID"
+    }`,
+  },
+  {
+    title: "Get chat messages",
+    value: "get_chat_messages",
+    method: "GET",
+    url: "https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_chats/?group_chat_id=3",
+    request: `
+    // import axios if you're using a module system
+    const axios = require('axios');
+    
+    const url = 'https://kosmoshr.pythonanywhere.com/api/v1/group_chats/get_chats/?group_chat_id=3';
+    
+    // headers
+    const headers = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+    
+    // make the request
+    axios.get(url, {
+      headers: headers
+    })
+    .then(response => {
+      // Handle the json response
+      console.log(response);
+    })
+    .catch(error => {
+      // Handle the error
+      console.error('Error: ', error);
+    })`,
+    success_response: `
+    // if group chat is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "group": {
+                  "id": 3,
+                  "title": "Group Chat for Administration",
+                  "department": {
+                      "id": 3,
+                      "title": "Administration"
+                  },
+                  "members": [
+                      {
+                          "id": 6,
+                          "id_no": "kos0010",
+                          "first_name": "Peter",
+                          "last_name": "Parker",
+                          "email": "peterparker@gmail.com",
+                          "image": null
+                      }
+                  ],
+                  "created": "2023-11-06T10:21:10.346875Z"
+              },
+              "sender": {
+                  "id": 6,
+                  "id_no": "kos0010",
+                  "first_name": "Peter",
+                  "last_name": "Parker",
+                  "email": "peterparker@gmail.com",
+                  "image": null
+              },
+              "message": "Hi everyone",
+              "date": "2023-11-06T10:46:49Z",
+              "seen_by": [
+                  {
+                      "id": 6,
+                      "id_no": "kos0010",
+                      "first_name": "Peter",
+                      "last_name": "Parker",
+                      "email": "peterparker@gmail.com",
+                      "image": null
+                  }
+              ]
+          }
+      ],
+      "message": "chat messages retrieved"
+  }`,
+    error_response: `
+    // error due to empty or invalid id
+    {
+        "status": "error",
+        "message": "Invalid group chat ID"
+    }`,
+  },
+  // template
+  {
         title: "",
         value: "",
         method: "",
