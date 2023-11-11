@@ -220,6 +220,9 @@ const admin = [
             "phone_number": "07011223344",
             "date_of_birth": null,
             "address": "",
+            "city": "",
+            "state": "",
+            "nationality": "Nigeria",
             "appointment_date": null,
             "position": null,
             "department": null,
@@ -326,7 +329,468 @@ const admin = [
         // error due to unauthorized user
         {
             "status": "error",
-            "message": "Unauthorized email"
+            "message": "Unauthorized API token"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Create Employee Account",
+    value: "create_employee_account",
+    method: "POST",
+    url: `${base_url}profile/create_employee_account/`,
+    request: `
+    const url = '${base_url}profile/create_employee_account/';
+    
+    // form data to be created
+    const formData = new FormData();
+    formData.append('email', "johndoe@gmail.com")
+    formData.append("title", "Mr")
+    formData.append('first_name', "John")
+    formData.append('last_name', "Doe")
+    formData.append('middle_name', "B.")
+    formData.append("city", "Ilorin")
+    formData.append('state', "Kwara")
+    formData.append('nationality', "Nigeria")
+    formData.append('phone_number', "09056574634")
+    formData.append('account_type', "employee") // can either be "staff" or "employee"
+    formData.append('position', 2) // (an integer) id of the selected position (check documentation on how to fetch positions and departments), select form field is advised
+    formData.append('department', 1) // same as position
+    formData.append('salary', 150000.00) // a decimal field
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    // when user account has been created
+      {
+          "status": "success",
+          "message": "Account created successfully. username is &apos;kos0001&apos; and password is &apos;John&apos;", // can be changed after login
+          "data": {
+              "user": {
+              "id": 1,
+              "username": "kos0001"
+              },
+              "address": "",
+              "api_token": "6je39zonyq6k352nt3j0cxb0xg4trnn0dqv0m247koffj52x1pjc5ypx7izk",
+              "appointment_date": null,
+              "date_of_birth": null,
+              "email": "johndoe@gmail.com",
+              "first_name": "John",
+              "id": 6,
+              "id_no": "kos0001",
+              "image": null,
+              "is_premium_user": false,
+              "last_name": "Doe",
+              "middle_name": "B.",
+              "phone_number": "09056574634",
+              "city": "Ilorin",
+              "state": "Kwara",
+              "nationality": "Nigeria",
+              "position": {
+                "id": 2,
+                "title": "Clerk"
+              },
+              "department": {
+                "id": 1,
+                "title": "Sales"
+              },
+              "salary": "150000.00",
+              "title": "Mr"
+          }
+      }`,
+    error_response: `
+    // when an error occur while processing request
+      {
+        "status": "error",
+        "message": "error while creating account"
+      }
+      
+      // error due to existing email
+      {
+      "status": "error",
+      "message": "Email &apos;johndoe@gmail&apos; has already been used, kindly use another email"
+      }
+      
+      // error due to invalid email
+      {
+          "status": "error",
+          "message": "Invalid email"
+      }
+      
+      // error due to unauthorized API key
+      {
+          "status": "error",
+          "message": "Unauthorized user"
+      }
+      
+      // error due to invalid API key
+      {
+          "status": "error",
+          "message": "Invalid API Key"
+      }`,
+  },
+  {
+    title: "Admin Login/Authentication",
+    value: "admin_login",
+    method: "POST",
+    url: `${base_url}profile/authentication/`,
+    request: `
+    const url = '${base_url}profile/authentication/';
+    const formData = new FormData();
+    formData.append('username', "admin-username")
+    formData.append('password', "admin-password")
+    ${make_post_req}`,
+    success_response: `
+    {
+            "status": "success",
+            "message": "login successful",
+            "data": {
+              "id": 3,
+              "user": {
+                  "id": 6,
+                  "username": "Admin"
+              },
+              "title": null,
+              "first_name": "Kosmos",
+              "middle_name": "B.",
+              "last_name": "Admin",
+              "email": "admin@gmail.com",
+              "phone_number": "07011223344",
+              "date_of_birth": null,
+              "address": "",
+              "city": "",
+              "state": "",
+              "nationality": "Nigeria",
+              "appointment_date": null,
+              "position": null,
+              "department": null,
+              "id_no": null,
+              "salary": null,
+              "is_premium_user": true,
+              "image": "http://127.0.0.1:8000/media/profile/image/avatar-2.jpg",
+              "api_token": "6s0gjrqr61xrrt7omzo8lmp4vo0dsgwamlzvoa7ygxsw8ledxadfp68ygjtr"
+            }
+    }`,
+    error_response: `
+    // error due to unauthorized login
+        {
+            "status": "error",
+            "message": "user not authorized"
+        }
+        
+        // error due to disabled account
+        {
+            "status": "error",
+            "message": "Your account has been disabled"
+        }
+        
+        // error due to invalid login
+        {
+            "status": "error",
+            "message": "Invalid login credentials"
+        }`,
+  },
+  {
+    title: "Admin Logout",
+    value: "admin_logout",
+    method: "POST",
+    url: `${base_url}profile/admin_logout/`,
+    request: `
+    const url = '${base_url}profile/admin_logout/';
+    const formData = new FormData();
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "logout successful"
+    }`,
+    error_response: `
+    // error due to unauthorized API token
+        {
+            "status": "error",
+            "message": "user not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+            "status": "error",
+            "message": "Invalid API token"
+        }`,
+  },
+  {
+    title: "Get Admin Profile",
+    value: "get_admin_profile",
+    method: "POST",
+    url: `${base_url}profile/get_admin_profile/`,
+    request: `
+    const url = '${base_url}profile/get_admin_profile/';
+    const formData = new FormData();
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+            "status": "success",
+            "message": "data fetched successfully",
+            "data": {
+              "id": 3,
+              "user": {
+                  "id": 6,
+                  "username": "Admin",
+              },
+              "title": null,
+              "first_name": "Kosmos",
+              "middle_name": "B.",
+              "last_name": "Admin",
+              "email": "admin@gmail.com",
+              "phone_number": "07011223344",
+              "date_of_birth": null,
+              "address": "",
+              "city": "",
+              "state": "",
+              "nationality": "Nigeria",
+              "appointment_date": null,
+              "position": null,
+              "department": null,
+              "id_no": null,
+              "salary": null,
+              "is_premium_user": true,
+              "image": "http://127.0.0.1:8000/media/profile/image/avatar-2.jpg",
+              "api_token": "6s0gjrqr61xrrt7omzo8lmp4vo0dsgwamlzvoa7ygxsw8ledxadfp68ygjtr"
+            }
+    }`,
+    error_response: `
+    // error due to unauthorized API token
+        {
+            "status": "error",
+            "message": "user not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+            "status": "error",
+            "message": "Invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Admin Profile",
+    value: "edit_admin_profile",
+    method: "POST",
+    url: `${base_url}profile/edit_admin_profile/`,
+    request: `
+    const url = '${base_url}profile/edit_admin_profile/';
+    const formData = new FormData();
+    formData.append('api_token', "admin-api-token")
+    // other data to be edited like email, phone number, address, etc not added yet
+    ${make_post_req}`,
+    success_response: `
+    {
+            "status": "success",
+            "message": "profile edited successfully",
+            "data": {
+              "id": 3,
+              "user": {
+                  "id": 6,
+                  "username": "Admin",
+              },
+              "title": null,
+              "first_name": "Kosmos",
+              "middle_name": "B.",
+              "last_name": "Admin",
+              "email": "admin@gmail.com",
+              "phone_number": "07011223344",
+              "date_of_birth": null,
+              "address": "",
+              "city": "",
+              "state": "",
+              "nationality": "Nigeria",
+              "appointment_date": null,
+              "position": null,
+              "department": null,
+              "id_no": null,
+              "salary": null,
+              "is_premium_user": true,
+              "image": "http://127.0.0.1:8000/media/profile/image/avatar-2.jpg",
+              "api_token": "6s0gjrqr61xrrt7omzo8lmp4vo0dsgwamlzvoa7ygxsw8ledxadfp68ygjtr"
+            }
+    }`,
+    error_response: `
+    // error due to unauthorized API token
+        {
+            "status": "error",
+            "message": "user not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+            "status": "error",
+            "message": "Invalid API token"
+        }`,
+  },
+  {
+    title: "Get Positions",
+    value: "get_positions",
+    method: "GET",
+    url: `${base_url}positions/get_positions/`,
+    request: `
+    const url = '${base_url}positions/get_positions/';
+    // for pagination
+    // to specify the number of items per page (default=20)
+    const url = '${base_url}positions/get_positions/?per_page=5'; // returns 5 elements
+    // to specify the page number requested (default=page 1)
+    const url = '${base_url}positions/get_positions/?page=2'; // returns page 2
+    // to perform search operation (the search is made by returning objects whose title contains the searched string)
+    const url = '${base_url}positions/get_positions/?search=man'; // returns list of objects that contains "man" in title (e.g Manager)
+    // to specify multiple parameters, any or all of the above parameters can be combined
+    const url = '${base_url}positions/get_positions/?per_page=5&page=1&search=c'; // returns page 1 containing 5 objects per page of onjects conytaining "c" in their title
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 2,
+              "title": "Clerk"
+          },
+          {
+              "id": 3,
+              "title": "CEO"
+          },
+          {
+              "id": 4,
+              "title": "Secretary"
+          }
+      ],
+      "message": "position list retrieved",
+      "page_number": 1,
+      "list_per_page": 5,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": "c"
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No position found",
+      "page_number": 1,
+      "list_per_page": 5,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": "c"
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting position list"
+        }`,
+  },
+  {
+    title: "Get Specific Position",
+    value: "get_specific_position",
+    method: "GET",
+    url: `${base_url}positions/get_position/?position_id={id of the position}`,
+    request: `
+    const url = '${base_url}positions/get_position/?position_id=2';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 2,
+          "title": "Clerk"
+      },
+      "message": "position details retrieved"
+    }`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid position ID'
+        }`,
+  },
+  // template
+  {
+    title: "Create Position",
+    value: "create_position",
+    method: "POST",
+    url: `${base_url}positions/create_position/`,
+    request: `
+    const url = "${base_url}positions/create_position/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-position")
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-position"
+      },
+      "message": "position created successfully"
+    }`,
+    error_response: `
+    // error due to existing position
+        {
+          "status": "error",
+          "message": "position already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Position",
+    value: "edit_position",
+    method: "POST",
+    url: `${base_url}positions/edit_position/`,
+    request: `
+    const url = "${base_url}positions/edit_position/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of position to be edited
+    formData.append('title', "title-of-edited-position");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-edited-position"
+      },
+      "message": "position edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "position  with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
         }
         
         // error due to invalid API token
@@ -342,14 +806,9 @@ const admin = [
     method: "",
     url: `${base_url}`,
     request: `
-    const url = '${base_url}';
-    `,
+    const url = "${base_url}";
+    ${make_get_req}`,
     success_response: ``,
-    error_response: `
-    // error due to
-    {
-      "status": "error",
-      "message": ""
-    }`,
+    error_response: ``,
   },
 ]
