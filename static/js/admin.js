@@ -361,6 +361,10 @@ const admin = [
     formData.append('position', 2) // (an integer) id of the selected position (check documentation on how to fetch positions and departments), select form field is advised
     formData.append('department', 1) // same as position
     formData.append('salary', 150000.00) // a decimal field
+    formData.append('date_of_birth', "1987-02-05")
+    formData.append('appointment_date', "2023-11-05")
+    formData.append('address', "Allen Avenue")
+    formData.append('image', "") // image file
     formData.append('api_token', "admin-api-token")
     ${make_post_req}`,
     success_response: `
@@ -373,15 +377,15 @@ const admin = [
               "id": 1,
               "username": "kos0001"
               },
-              "address": "",
+              "address": "Allen Avenue",
               "api_token": "6je39zonyq6k352nt3j0cxb0xg4trnn0dqv0m247koffj52x1pjc5ypx7izk",
-              "appointment_date": null,
-              "date_of_birth": null,
+              "appointment_date": "2023-11-05",
+              "date_of_birth": "1987-02-05",
               "email": "johndoe@gmail.com",
               "first_name": "John",
               "id": 6,
               "id_no": "kos0001",
-              "image": null,
+              "image": "https://kosmoshr.pythonanywhere.com/media/profile/image/avatar-1.jpg",
               "is_premium_user": false,
               "last_name": "Doe",
               "middle_name": "B.",
