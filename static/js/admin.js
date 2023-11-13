@@ -803,6 +803,43 @@ const admin = [
         "message": "invalid API token"
         }`,
   },
+  {
+    title: "Delete Position",
+    value: "delete_position",
+    method: "POST",
+    url: `${base_url}positions/delete_position/`,
+    request: `
+    const url = "${base_url}positions/delete_position/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of position to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "position 'title-of-deleted-position' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "position  with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
   // template
   {
     title: "",
