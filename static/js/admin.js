@@ -1730,6 +1730,248 @@ const admin = [
         "message": "invalid API token"
         }`,
   },
+  /* =========================== Query ========================= */
+  {
+    title: "Get Queries",
+    value: "get_queries",
+    method: "GET",
+    url: `${base_url}queries/get_queries/`,
+    request: `
+    const url = '${base_url}queries/get_queries/';
+    // to filter queries by completed
+    const url = '${base_url}queries/get_queries/?completed=true';
+    // for pagination
+    // to specify the number of items per page (default=20)
+    const url = '${base_url}queries/get_queries/?per_page=5'; // returns 5 elements
+    // to specify the page number requested (default=page 1)
+    const url = '${base_url}queries/get_queries/?page=2'; // returns page 2
+    // to perform search operation (the search is made by returning objects whose title contains the searched string)
+    const url = '${base_url}queries/get_queries/?search=hunt'; // returns list of objects that contains "hunt" in title
+    // to specify multiple parameters, any or all of the above parameters can be combined
+    const url = '${base_url}queries/get_queries/?per_page=5&page=1&search=c';
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "title": "Late Coming",
+              "query": "<p>It has been brought to notice of the administration abot your constant latecoming, kindly report to the admin office</p>",
+              "addressed_to": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              },
+              "addressed": false
+          }
+      ],
+      "message": "query list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No query found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 0,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting query list"
+        }`,
+  },
+  {
+    title: "Get Specific Query",
+    value: "get_specific_query",
+    method: "GET",
+    url: `${base_url}queries/get_query/?query_id={id of the task}`,
+    request: `
+    const url = '${base_url}queries/get_query/?query_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 1,
+          "title": "Late Coming",
+          "query": "<p>It has been brought to notice of the administration abot your constant latecoming, kindly report to the admin office</p>",
+          "addressed_to": {
+              "id": 4,
+              "id_no": "kos0008",
+              "first_name": "John",
+              "last_name": "Doe",
+              "email": "johndoe@gmail.com",
+              "image": "/media/profile/image/avatar-1.jpg"
+          },
+          "addressed": false
+    },
+    "message": "query details retrieved"`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid query ID'
+        }`,
+  },
+  {
+    title: "Create Query",
+    value: "create_query",
+    method: "POST",
+    url: `${base_url}queries/create_query/`,
+    request: `
+    const url = "${base_url}queries/create_query/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-query")
+    formData.append('query', "content-of-query") // you can use text editor for content
+    formData.append('employee_id', "ID-number-of-employee-addressed-to")
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 2,
+        "title": "title-of-query",
+        "query": "content-of-query",
+        "addressed_to": {
+            "id": 4,
+            "id_no": "kos0008",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "johndoe@gmail.com",
+            "image": "/media/profile/image/avatar-1.jpg"
+        },
+        "addressed": false
+      },
+      "message": "query created successfully"
+    }`,
+    error_response: `
+    // error due to invalid employee ID
+        {
+          "status": "error",
+          "message": "invalid employee ID"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Query",
+    value: "edit_query",
+    method: "POST",
+    url: `${base_url}queries/edit_query/`,
+    request: `
+    const url = "${base_url}queries/edit_query/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 2); // id of query to be edited
+    // items to be edited includes; title, query, employee_id, addressed (true/false)
+    formData.append('addressed', true);
+    formData.append('api_token', "admin-api-token"); // admin api token
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 2,
+        "title": "title-of-query",
+        "query": "content-of-query",
+        "addressed_to": {
+            "id": 4,
+            "id_no": "kos0008",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "johndoe@gmail.com",
+            "image": "/media/profile/image/avatar-1.jpg"
+        },
+        "addressed": true
+      },
+      "message": "query edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "query  with id '2' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Query",
+    value: "delete_query",
+    method: "POST",
+    url: `${base_url}queries/delete_query/`,
+    request: `
+    const url = "${base_url}queries/delete_query/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 2); // id of query to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "query 'title-of-query' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "query with id '2' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
   // template
   {
     title: "",
