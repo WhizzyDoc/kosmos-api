@@ -588,7 +588,9 @@ const admin = [
     const url = '${base_url}profile/edit_admin_profile/';
     const formData = new FormData();
     formData.append('api_token', "admin-api-token")
-    // other data to be edited like email, phone number, address, etc not added yet
+    // other data to be edited like email, phone number, address, etc
+    formData.append('address', "24B, Kano Street")
+    formData.append('city', "Lagos")
     ${make_post_req}`,
     success_response: `
     {
@@ -607,8 +609,8 @@ const admin = [
               "email": "admin@gmail.com",
               "phone_number": "07011223344",
               "date_of_birth": null,
-              "address": "",
-              "city": "",
+              "address": "24B, Kano Street",
+              "city": "Lagos",
               "state": "",
               "nationality": "Nigeria",
               "appointment_date": null,
@@ -634,6 +636,7 @@ const admin = [
             "message": "Invalid API token"
         }`,
   },
+  /* =========================== Position ========================= */
   {
     title: "Get Positions",
     value: "get_positions",
@@ -719,7 +722,6 @@ const admin = [
           'message': 'Invalid position ID'
         }`,
   },
-  // template
   {
     title: "Create Position",
     value: "create_position",
@@ -826,6 +828,894 @@ const admin = [
         {
           "status": "error",
           "message": "position  with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Department ========================= */
+  {
+    title: "Get Departments",
+    value: "get_departments",
+    method: "GET",
+    url: `${base_url}departments/get_departments/`,
+    request: `
+    const url = '${base_url}departments/get_departments/';
+    // for pagination
+    // to specify the number of items per page (default=20)
+    const url = '${base_url}departments/get_departments/?per_page=5'; // returns 5 elements
+    // to specify the page number requested (default=page 1)
+    const url = '${base_url}departments/get_departments/?page=2'; // returns page 2
+    // to perform search operation (the search is made by returning objects whose title contains the searched string)
+    const url = '${base_url}departments/get_departments/?search=sa'; // returns list of objects that contains "sa" in title (e.g Sales)
+    // to specify multiple parameters, any or all of the above parameters can be combined
+    const url = '${base_url}departments/get_departments/?per_page=5&page=1&search=s'; // returns page 1 containing 5 objects per page of onjects containing "s" in their title
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+        {
+            "id": 1,
+            "title": "Sales"
+        },
+        {
+            "id": 2,
+            "title": "Human Resources"
+        },
+        {
+            "id": 3,
+            "title": "Administration"
+        }
+    ],
+      "message": "department list retrieved",
+      "page_number": 1,
+      "list_per_page": 5,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": "s"
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No department found",
+      "page_number": 1,
+      "list_per_page": 5,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": "s"
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting department list"
+        }`,
+  },
+  {
+    title: "Get Specific Department",
+    value: "get_specific_department",
+    method: "GET",
+    url: `${base_url}departments/get_department/?department_id={id of the department}`,
+    request: `
+    const url = '${base_url}departments/get_department/?department_id=3';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 3,
+          "title": "Administration"
+      },
+      "message": "department details retrieved"
+    }`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid department ID'
+        }`,
+  },
+  {
+    title: "Create Department",
+    value: "create_department",
+    method: "POST",
+    url: `${base_url}departments/create_department/`,
+    request: `
+    const url = "${base_url}departments/create_department/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-department")
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 4,
+          "title": "title-of-department"
+      },
+      "message": "department created successfully"
+    }`,
+    error_response: `
+    // error due to existing position
+        {
+          "status": "error",
+          "message": "department already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Department",
+    value: "edit_department",
+    method: "POST",
+    url: `${base_url}departments/edit_department/`,
+    request: `
+    const url = "${base_url}departments/edit_department/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 4); // id of department to be edited
+    formData.append('title', "title-of-edited-department");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 4,
+          "title": "title-of-edited-department"
+      },
+      "message": "department edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "department with id '4' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Department",
+    value: "delete_department",
+    method: "POST",
+    url: `${base_url}departments/delete_department/`,
+    request: `
+    const url = "${base_url}departments/delete_department/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 4); // id of department to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "department 'title-of-deleted-department' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "department with id '4' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Employee ========================= */
+  {
+    title: "Get Employees",
+    value: "get_employees",
+    method: "GET",
+    url: `${base_url}employees/get_employees/<br>
+    <span class="w-text-blue">to filter employee by department:</span><br>
+    ${base_url}employees/filter_employees/?department_id={id of department}<br>
+    <span class="w-text-blue">filtering also uses pagination</span><br>`,
+    request: `
+    const url = '${base_url}employees/get_employees/';
+    // for pagination
+    // to specify the number of items per page (default=20)
+    const url = '${base_url}employees/get_employees/?per_page=5'; // returns 5 elements
+    // to specify the page number requested (default=page 1)
+    const url = '${base_url}employees/get_employees/?page=2'; // returns page 2
+    // to perform search operation (the search is made by returning objects whose title contains the searched string)
+    const url = '${base_url}employees/get_employees/?search=sa'; // returns list of objects that contains "sa" in names, phone number or email
+    // to specify multiple parameters, any or all of the above parameters can be combined
+    const url = '${base_url}employees/get_employees/?per_page=5&page=1&search=a'; // returns page 1 containing 5 objects per page of onjects containing "a" in their names, phone number or email
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 5,
+              "user": {
+                  "id": 9,
+                  "username": "kos0009"
+              },
+              "title": "Miss",
+              "first_name": "Jane",
+              "middle_name": "C",
+              "last_name": "Doe",
+              "email": "janefoster@gmail.com",
+              "phone_number": "08123456476",
+              "date_of_birth": "2023-10-31",
+              "address": "",
+              "appointment_date": "2023-10-31",
+              "position": {
+                  "id": 2,
+                  "title": "Clerk"
+              },
+              "department": {
+                  "id": 1,
+                  "title": "Sales"
+              },
+              "id_no": "kos0009",
+              "salary": "210000.00",
+              "is_premium_user": false,
+              "image": "/media/profile/image/avatar-3.jpg",
+              "api_token": "mkdgpc931rw2yejbwdmpa83ak1qrh22sgkkt3kileehabp8h3cf1djwscjas",
+              "city": null,
+              "state": null,
+              "nationality": "Nigeria"
+          },
+          {
+              "id": 4,
+              "user": {
+                  "id": 8,
+                  "username": "kos0008"
+              },
+              "title": "Mr",
+              "first_name": "John",
+              "middle_name": "B",
+              "last_name": "Doe",
+              "email": "johndoe@gmail.com",
+              "phone_number": "09056574634",
+              "date_of_birth": "2023-10-31",
+              "address": "",
+              "appointment_date": "2023-10-31",
+              "position": {
+                  "id": 1,
+                  "title": "Manager"
+              },
+              "department": {
+                  "id": 2,
+                  "title": "Human Resources"
+              },
+              "id_no": "kos0008",
+              "salary": "500000.00",
+              "is_premium_user": false,
+              "image": "/media/profile/image/avatar-1.jpg",
+              "api_token": "1me9rbn2ti60hculhszfhq5hwhlo9vjws11555d92kmwfo6m7ie6bli3vy0e",
+              "city": null,
+              "state": null,
+              "nationality": "Nigeria"
+          },
+          {
+              "id": 6,
+              "user": {
+                  "id": 10,
+                  "username": "kos0010"
+              },
+              "title": null,
+              "first_name": "Peter",
+              "middle_name": null,
+              "last_name": "Parker",
+              "email": "peterparker@gmail.com",
+              "phone_number": null,
+              "date_of_birth": null,
+              "address": "",
+              "appointment_date": null,
+              "position": {
+                  "id": 4,
+                  "title": "Secretary"
+              },
+              "department": {
+                  "id": 3,
+                  "title": "Administration"
+              },
+              "id_no": "kos0010",
+              "salary": "0.00",
+              "is_premium_user": false,
+              "image": null,
+              "api_token": "6je39zonyq6k352nt3j0cxb0xg4trnn0dqv0m247koffj52x1pjc5ypx7izk",
+              "city": null,
+              "state": null,
+              "nationality": null
+          }
+      ],
+      "message": "employee list retrieved",
+      "page_number": 1,
+      "list_per_page": 5,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": "a",
+      "department": "title-of-filtered-department" // if url contains filtering
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No employee found",
+      "page_number": 1,
+      "list_per_page": 5,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": "a"
+      "department": "title-of-filtered-department" // if url contains filtering
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting employee list"
+        }`,
+  },
+  {
+    title: "Get Specific Employee",
+    value: "get_specific_employee",
+    method: "GET",
+    url: `${base_url}employees/get_employee/?employee_id={ID number of the employee}`,
+    request: `
+    const url = '${base_url}employees/get_employee/?employee_id=kos0008';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "employee details retrieved",
+      "data": {
+          "id": 4,
+          "user": {
+              "id": 8,
+              "username": "kos0008"
+          },
+          "title": "Mr",
+          "first_name": "John",
+          "middle_name": "B",
+          "last_name": "Doe",
+          "email": "johndoe@gmail.com",
+          "phone_number": "09056574634",
+          "date_of_birth": "2023-10-31",
+          "address": "",
+          "appointment_date": "2023-10-31",
+          "position": {
+              "id": 1,
+              "title": "Manager"
+          },
+          "department": {
+              "id": 2,
+              "title": "Human Resources"
+          },
+          "id_no": "kos0008",
+          "salary": "500000.00",
+          "is_premium_user": false,
+          "image": "/media/profile/image/avatar-1.jpg",
+          "api_token": "1me9rbn2ti60hculhszfhq5hwhlo9vjws11555d92kmwfo6m7ie6bli3vy0e",
+          "city": null,
+          "state": null,
+          "nationality": "Nigeria"
+      }
+    }`,
+    error_response: `
+        {
+          'status': 'error',
+          'message': 'Invalid ID Number'
+        }`,
+  },
+  {
+    title: "Get Specific Employee Report",
+    value: "get_specific_employee_report",
+    method: "GET",
+    url: `${base_url}employees/get_employee_report/?employee_id={ID number of the employee}`,
+    request: `
+    const url = '${base_url}employees/get_employee_report/?employee_id=kos0008';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "employee tasks report retrieved",
+      "data": [
+          {
+              "id": 2,
+              "title": "Talent Hunt",
+              "description": "<p>Going out to institutions and search for talented individuals</p>",
+              "file": null,
+              "reward": null,
+              "assigned_to": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              },
+              "completed": true,
+              "deadline": "2023-11-14T09:11:24Z"
+          },
+          {
+              "id": 1,
+              "title": "Minute Writing",
+              "description": "<p>Writing and submission of last meeting minute</p>",
+              "file": null,
+              "reward": null,
+              "assigned_to": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              },
+              "completed": false,
+              "deadline": "2023-11-14T12:00:00Z"
+          }
+      ],
+      "total_tasks": 2,
+      "completed_tasks": 1,
+      "incomplete_tasks": 1
+    }`,
+    error_response: `
+        {
+          'status': 'error',
+          'message': 'Invalid ID Number'
+        }`,
+  },
+  {
+    title: "Edit Employee",
+    value: "edit_employee",
+    method: "POST",
+    url: `${base_url}employees/edit_employee/`,
+    request: `
+    const url = "${base_url}employees/edit_employee/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('employee_id', "kos0008"); // ID number of employee to be edited
+    formData.append('api_token', "admin-api-token");
+    // field to be edited including email, names, phone number, address, salary, etc
+    formData.append('salary', 200000.00);
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 4,
+        "user": {
+            "id": 8,
+            "username": "kos0008"
+        },
+        "title": "Mr",
+        "first_name": "John",
+        "middle_name": "B",
+        "last_name": "Doe",
+        "email": "johndoe@gmail.com",
+        "phone_number": "09056574634",
+        "date_of_birth": "2023-10-31",
+        "address": "",
+        "appointment_date": "2023-10-31",
+        "position": {
+            "id": 1,
+            "title": "Manager"
+        },
+        "department": {
+            "id": 2,
+            "title": "Human Resources"
+        },
+        "id_no": "kos0008",
+        "salary": "200000.00",
+        "is_premium_user": false,
+        "image": "/media/profile/image/avatar-1.jpg",
+        "api_token": "1me9rbn2ti60hculhszfhq5hwhlo9vjws11555d92kmwfo6m7ie6bli3vy0e",
+        "city": null,
+        "state": null,
+        "nationality": "Nigeria"
+      },
+      "message": "employee profile edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "employee with ID number 'kos0008' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Employee Account",
+    value: "delete_employee",
+    method: "POST",
+    url: `${base_url}employees/delete_employee/`,
+    request: `
+    const url = "${base_url}employees/delete_employee/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('employee_id', 'kos0008'); // id of employee to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "Employee 'John Doe' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "employee with id 'kos0008' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Deactivate Employee Account",
+    value: "deactivate_employee",
+    method: "POST",
+    url: `${base_url}employees/deactivate_employee/`,
+    request: `
+    const url = "${base_url}employees/deactivate_employee/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('employee_id', 'kos0008'); // id of employee to be deactivated
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "Employee 'John Doe' account deactivated successfully"
+    } // deactivation means employee will not be able to login to their account`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "employee with id 'kos0008' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Task ========================= */
+  {
+    title: "Get Tasks",
+    value: "get_tasks",
+    method: "GET",
+    url: `${base_url}tasks/get_tasks/`,
+    request: `
+    const url = '${base_url}tasks/get_tasks/';
+    // to filter tasks by completed
+    const url = '${base_url}tasks/get_tasks/?completed=true';
+    // for pagination
+    // to specify the number of items per page (default=20)
+    const url = '${base_url}tasks/get_tasks/?per_page=5'; // returns 5 elements
+    // to specify the page number requested (default=page 1)
+    const url = '${base_url}tasks/get_tasks/?page=2'; // returns page 2
+    // to perform search operation (the search is made by returning objects whose title contains the searched string)
+    const url = '${base_url}tasks/get_tasks/?search=hunt'; // returns list of objects that contains "hunt" in title or description (e.g Talent Hunt)
+    // to specify multiple parameters, any or all of the above parameters can be combined
+    const url = '${base_url}tasks/get_tasks/?per_page=5&page=1&search=c'; // returns page 1 containing 5 objects per page of onjects conytaining "c" in their title or description
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 2,
+              "title": "Talent Hunt",
+              "description": "<p>Going out to institutions and search for talented individuals</p>",
+              "file": null,
+              "reward": null,
+              "assigned_to": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              },
+              "completed": true,
+              "deadline": "2023-11-14T09:11:24Z"
+          },
+          {
+              "id": 1,
+              "title": "Minute Writing",
+              "description": "<p>Writing and submission of last meeting minute</p>",
+              "file": null,
+              "reward": null,
+              "assigned_to": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              },
+              "completed": false,
+              "deadline": "2023-11-14T12:00:00Z"
+          }
+      ],
+      "message": "task list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 2,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No task found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 2,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting task list"
+        }`,
+  },
+  {
+    title: "Get Specific Task",
+    value: "get_specific_task",
+    method: "GET",
+    url: `${base_url}tasks/get_task/?task_id={id of the task}`,
+    request: `
+    const url = '${base_url}tasks/get_task/?task_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 1,
+          "title": "Minute Writing",
+          "description": "<p>Writing and submission of last meeting minute</p>",
+          "file": null,
+          "reward": null,
+          "assigned_to": {
+              "id": 4,
+              "id_no": "kos0008",
+              "first_name": "John",
+              "last_name": "Doe",
+              "email": "johndoe@gmail.com",
+              "image": "/media/profile/image/avatar-1.jpg"
+          },
+          "completed": false,
+          "deadline": "2023-11-14T12:00:00Z"
+      },
+      "message": "task details retrieved"
+    }`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid task ID'
+        }`,
+  },
+  {
+    title: "Create Task",
+    value: "create_task",
+    method: "POST",
+    url: `${base_url}tasks/create_task/`,
+    request: `
+    const url = "${base_url}tasks/create_task/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-task")
+    formData.append('description', "description-of-task")
+    formData.append('deadline', "datetimefield-for-deadline")
+    formData.append('file', fileInput) // if there's a file to work on
+    formData.append('employee_id', "ID-number-of-employee-assigned-to")
+    formData.append('reward_id', "id-of-selected-reward") // if there's a reward for completing task
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 3,
+        "title": "Task Title",
+        "description": "<p>Task Description</p>",
+        "file": "/media/tasks/files/myfile.doc",
+        "reward": null,
+        "assigned_to": {
+            "id": 5,
+            "id_no": "kos0009",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "email": "janefoster@gmail.com",
+            "image": "/media/profile/image/avatar-3.jpg"
+        },
+        "completed": false,
+        "deadline": "2023-11-22T10:15:02Z"
+      },
+      "message": "task created successfully"
+    }`,
+    error_response: `
+    // error due to existing position
+        {
+          "status": "error",
+          "message": "task already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Task",
+    value: "edit_task",
+    method: "POST",
+    url: `${base_url}tasks/edit_task/`,
+    request: `
+    const url = "${base_url}tasks/edit_task/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 3); // id of task to be edited
+    // items to be edited includes; title, description, employee_id, deadline, completed, reward_id
+    formData.append('completed', true);
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 3,
+        "title": "Task Title",
+        "description": "<p>Task Description</p>",
+        "file": "/media/tasks/files/myfile.doc",
+        "reward": null,
+        "assigned_to": {
+            "id": 5,
+            "id_no": "kos0009",
+            "first_name": "Jane",
+            "last_name": "Doe",
+            "email": "janefoster@gmail.com",
+            "image": "/media/profile/image/avatar-3.jpg"
+        },
+        "completed": true,
+        "deadline": "2023-11-22T10:15:02Z"
+      },
+      "message": "task edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "task  with id '3' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Task",
+    value: "delete_task",
+    method: "POST",
+    url: `${base_url}tasks/delete_task/`,
+    request: `
+    const url = "${base_url}tasks/delete_task/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 3); // id of task to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "task'Task Title' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "task with id '3' does not exist"
         }
 
         // error due to unauthorized user
