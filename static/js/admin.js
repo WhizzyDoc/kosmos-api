@@ -1972,6 +1972,1791 @@ const admin = [
         "message": "invalid API token"
         }`,
   },
+  /* =========================== News Category ========================= */
+  {
+    title: "Get News Categories",
+    value: "get_categories",
+    method: "GET",
+    url: `${base_url}news_categories/get_categories/`,
+    request: `
+    const url = '${base_url}news_categories/get_categories/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 3,
+              "title": "Technology",
+              "slug": "technology"
+          },
+          {
+              "id": 2,
+              "title": "event",
+              "slug": "event"
+          },
+          {
+              "id": 1,
+              "title": "production",
+              "slug": "production"
+          }
+      ],
+      "message": "category list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No categories found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 3,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting category list"
+        }`,
+  },
+  {
+    title: "Create A News Category",
+    value: "create_category",
+    method: "POST",
+    url: `${base_url}news_categories/create_category/`,
+    request: `
+    const url = "${base_url}news_categories/create_category/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-category")
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-category"
+      },
+      "message": "category created successfully"
+    }`,
+    error_response: `
+    // error due to existing category
+        {
+          "status": "error",
+          "message": "category already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Category",
+    value: "edit_category",
+    method: "POST",
+    url: `${base_url}news_categories/edit_category/`,
+    request: `
+    const url = "${base_url}news_categories/edit_category/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of category to be edited
+    formData.append('title', "title-of-edited-category");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-edited-category"
+      },
+      "message": "category edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "category  with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Category",
+    value: "delete_category",
+    method: "POST",
+    url: `${base_url}news_categories/delete_category/`,
+    request: `
+    const url = "${base_url}news_categories/delete_category/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of category to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "category 'title-of-deleted-category' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "category with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Bank ========================= */
+  {
+    title: "Get Banks",
+    value: "get_banks",
+    method: "GET",
+    url: `${base_url}banks/get_banks/`,
+    request: `
+    const url = '${base_url}banks/get_banks/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+    
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "bank_name": "Access bank",
+              "bank_code": "044"
+          },
+          {
+              "id": 2,
+              "bank_name": "Diamond bank",
+              "bank_code": "063"
+          },
+          {
+              "id": 3,
+              "bank_name": "Ecobank Nigeria Plc",
+              "bank_code": "050"
+          },
+          {
+              "id": 7,
+              "bank_name": "FIRSTMONIE WALLET",
+              "bank_code": "928"
+          },
+          {
+              "id": 4,
+              "bank_name": "Fidelity bank",
+              "bank_code": "070"
+          },
+          {
+              "id": 6,
+              "bank_name": "First City Monument Bank Plc (FCMB)",
+              "bank_code": "214"
+          },
+          {
+              "id": 5,
+              "bank_name": "First bank",
+              "bank_code": "011"
+          },
+          {
+              "id": 9,
+              "bank_name": "GTBank",
+              "bank_code": "058"
+          },
+          {
+              "id": 8,
+              "bank_name": "Globus Bank",
+              "bank_code": "00103"
+          },
+          {
+              "id": 10,
+              "bank_name": "Heritage bank",
+              "bank_code": "030"
+          }
+      ],
+      "message": "bank list retrieved",
+      "page_number": 1,
+      "list_per_page": 10,
+      "total_pages": 4,
+      "total_items": 34,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No bank found",
+      "page_number": 1,
+      "list_per_page": 10,
+      "total_pages": 4,
+      "total_items": 34,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting bank list"
+        }`,
+  },
+  {
+    title: "Create Bank",
+    value: "create_bank",
+    method: "POST",
+    url: `${base_url}banks/create_bank/`,
+    request: `
+    const url = "${base_url}banks/create_bank/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('bank_name', "name-of-bank")
+    formData.append('bank_code', "bank-code") // you can get bank code by searching online
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 40,
+          "bank_name": "name-of-bank",
+          "bank_code": "bank-code"
+      },
+      "message": "bank created successfully"
+    }`,
+    error_response: `
+    // error due to existing bank
+        {
+          "status": "error",
+          "message": "bank already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Bank",
+    value: "edit_bank",
+    method: "POST",
+    url: `${base_url}banks/edit_bank/`,
+    request: `
+    const url = "${base_url}banks/edit_bank/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 40); // id of bank to be edited
+    formData.append('bank_name', "name-of-edited-bank");
+    formData.append('bank_code', "code-of-edited-bank");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 40,
+          "bank_name": "name-of-edited-bank",
+          "bank_code": "code-of-edited-bank"
+      },
+      "message": "bank edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "bank with id '40' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Bank",
+    value: "delete_bank",
+    method: "POST",
+    url: `${base_url}banks/delete_bank/`,
+    request: `
+    const url = "${base_url}banks/delete_bank/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 40); // id of bank to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "bank 'name-of-deleted-bank' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "bank with id '40' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== News ========================= */
+  {
+    title: "Get News List",
+    value: "get_news_list",
+    method: "GET",
+    url: `${base_url}news/news_list/`,
+    request: `
+    const url = '${base_url}news/news_list/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+    // for filtering by active or verified or both
+    const url = '${base_url}news/filter_news/?active=true&verified=true';
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "author": {
+                  "id": 3,
+                  "id_no": null,
+                  "first_name": "Kosmos",
+                  "last_name": "Admin",
+                  "email": "admin@gmail.com",
+                  "image": "/media/profile/image/avatar-2.jpg"
+              },
+              "title": "Implementation of Robots In Production",
+              "slug": "implementation-of-robots-in-production",
+              "category": {
+                  "id": 3,
+                  "title": "Technology",
+                  "slug": "technology"
+              },
+              "date": "2023-11-04T02:02:15Z",
+              "active": true,
+              "verified": true,
+              "post": "<p>The company hereby announces the introduction and implementation of robots and A.I in the production department to boost productivity and higher sales.</p>"
+          }
+      ],
+      "message": "news list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No news found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting news list"
+        }`,
+  },
+  {
+    title: "Get Specific News",
+    value: "get_specific_news",
+    method: "GET",
+    url: `${base_url}news/get_news/?news_id={id of the news}`,
+    request: `
+    const url = '${base_url}news/get_news/?news_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 1,
+          "author": {
+              "id": 3,
+              "id_no": null,
+              "first_name": "Kosmos",
+              "last_name": "Admin",
+              "email": "admin@gmail.com",
+              "image": "/media/profile/image/avatar-2.jpg"
+          },
+          "title": "Implementation of Robots In Production",
+          "slug": "implementation-of-robots-in-production",
+          "category": {
+              "id": 3,
+              "title": "Technology",
+              "slug": "technology"
+          },
+          "date": "2023-11-04T02:02:15Z",
+          "active": true,
+          "verified": true,
+          "post": "<p>The company hereby announces the introduction and implementation of robots and A.I in the production department to boost productivity and higher sales.</p>"
+      },
+      "message": "news details retrieved"
+    }`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid news ID'
+        }`,
+  },
+  {
+    title: "Create News",
+    value: "create_news",
+    method: "POST",
+    url: `${base_url}news/create_news/`,
+    request: `
+    const url = "${base_url}news/create_news/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-news")
+    formData.append('post', "content-of-news") // you can use the textarea text editor
+    formData.append('verified', true)
+    formData.append('active', true) // employees can only see active news
+    formData.append('category_id', 1) // id of selected news category
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 1,
+        "author": {
+            "id": 3,
+            "id_no": null,
+            "first_name": "Kosmos",
+            "last_name": "Admin",
+            "email": "admin@gmail.com",
+            "image": "/media/profile/image/avatar-2.jpg"
+        },
+        "title": "title-of-news",
+        "slug": "slug-of-title", // generated from title
+        "category": {
+            "id": 1,
+            "title": "Production",
+            "slug": "production"
+        },
+        "date": "2023-11-04T02:02:15Z",
+        "active": true,
+        "verified": true,
+        "post": "content-of-news"
+      },
+      "message": "news created successfully"
+    }`,
+    error_response: `
+    // error due to invalid category id
+        {
+          "status": "error",
+          "message": "category ith id '1' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit News",
+    value: "edit_news",
+    method: "POST",
+    url: `${base_url}news/edit_news/`,
+    request: `
+    const url = "${base_url}news/edit_news/";
+
+    // form data to be created
+    // editable content includes; title, post, verified, active, category_id
+    const formData = new FormData();
+    formData.append('id', 4); // id of news to be edited
+    formData.append('post', "edited-content-of-news");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 4,
+        "author": {
+            "id": 3,
+            "id_no": null,
+            "first_name": "Kosmos",
+            "last_name": "Admin",
+            "email": "admin@gmail.com",
+            "image": "/media/profile/image/avatar-2.jpg"
+        },
+        "title": "title-of-news",
+        "slug": "slug-of-title", // generated from title
+        "category": {
+            "id": 1,
+            "title": "Production",
+            "slug": "production"
+        },
+        "date": "2023-11-04T02:02:15Z",
+        "active": true,
+        "verified": true,
+        "post": "edited-content-of-news"
+      },
+      "message": "news edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "news with id '4' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete News",
+    value: "delete_news",
+    method: "POST",
+    url: `${base_url}news/delete_news/`,
+    request: `
+    const url = "${base_url}news/delete_news/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 4); // id of news to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "news 'title-of-deleted-news' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "news with id '4' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Meeting ========================= */
+  {
+    title: "Get Meetings",
+    value: "get_meetings",
+    method: "GET",
+    url: `${base_url}meetings/get_meetings/`,
+    request: `
+    const url = '${base_url}meetings/get_meetings/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "title": "End Of Week Meeting",
+              "description": "<p>A general meeting among departmental heads in the company</p>",
+              "date": "2023-11-04T01:01:03Z",
+              "members": [
+                  {
+                      "id": 1,
+                      "title": "Manager"
+                  },
+                  {
+                      "id": 3,
+                      "title": "CEO"
+                  },
+                  {
+                      "id": 4,
+                      "title": "Secretary"
+                  }
+              ],
+              "attended_by": []
+          }
+      ],
+      "message": "meeting list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No news found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting meeting list"
+        }`,
+  },
+  {
+    title: "Get Specific Meeting",
+    value: "get_specific_meeting",
+    method: "GET",
+    url: `${base_url}meetings/get_meeting/?meeting_id={id of meeting}`,
+    request: `
+    const url = '${base_url}meetings/get_meeting/?meeting_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 1,
+          "title": "End Of Week Meeting",
+          "description": "<p>A general meeting among departmental heads in the company</p>",
+          "date": "2023-11-04T01:01:03Z",
+          "members": [
+            {
+              "id": 1,
+              "title": "Manager"
+            },
+            {
+              "id": 3,
+              "title": "CEO"
+            },
+            {
+              "id": 4,
+              "title": "Secretary"
+            }
+          ],
+          "attended_by": []
+      },
+      "message": "meeting details retrieved"
+    }`,
+    error_response: `
+    {
+      "status": "error",
+      "message": "Invalid meeting ID"
+    }`,
+  },
+  {
+    title: "Create Meeting",
+    value: "create_meeting",
+    method: "POST",
+    url: `${base_url}meetings/create_meeting/`,
+    request: `
+    const url = "${base_url}meetings/create_meeting/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-meeting")
+    formData.append('description', "description-of-meeting")
+    formData.append('members', [1, 2, 3]) // array containig the id of the positions of all the members (must be an integer)
+    // e.g [1, 2, 3] correspond to ['manager', 'clerk', 'CEO']
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 2,
+        "title": "title-of-meeting",
+        "description": "description-of-meeting",
+        "date": "2023-11-04T01:01:03Z",
+        "members": [
+          {
+            "id": 1,
+            "title": "Manager"
+          },
+          {
+            "id": 2,
+            "title": "Clerk"
+          },
+          {
+            "id": 3,
+            "title": "CEO"
+          }
+        ],
+        "attended_by": []
+      },
+      "message": "meeting created successfully"
+    }`,
+    error_response: `
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Meeting",
+    value: "edit_meeting",
+    method: "POST",
+    url: `${base_url}meetings/edit_meeting/`,
+    request: `
+    const url = "${base_url}meetings/edit_meeting/";
+
+    // form data to be created
+    // editable content includes; title, description, members, attended_by
+    const formData = new FormData();
+    formData.append('id', 2); // id of meeting to be edited
+    formData.append('attended_by', [1, 2]); // array containig the id of the positions of attending members (must be an integer)
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+        "id": 2,
+        "title": "title-of-meeting",
+        "description": "description-of-meeting",
+        "date": "2023-11-04T01:01:03Z",
+        "members": [
+          {
+            "id": 1,
+            "title": "Manager"
+          },
+          {
+            "id": 2,
+            "title": "Clerk"
+          },
+          {
+            "id": 3,
+            "title": "CEO"
+          }
+        ],
+        "attended_by": [
+          {
+            "id": 1,
+            "title": "Manager"
+          },
+          {
+            "id": 2,
+            "title": "Clerk"
+          }
+        ]
+      },
+      "message": "meeting edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "meeting with id '2' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Meeting",
+    value: "delete_meeting",
+    method: "POST",
+    url: `${base_url}meetings/delete_meeting/`,
+    request: `
+    const url = "${base_url}meetings/delete_meeting/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 2); // id of meeting to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "meeting 'title-of-deleted-meeting' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "meeting with id '2' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Complaint ========================= */
+  {
+    title: "Get Complaints",
+    value: "get_complaints",
+    method: "GET",
+    url: `${base_url}complaints/get_complaints/`,
+    request: `
+    const url = '${base_url}complaints/get_complaints/';
+    // to filter complaints by addressed or not addressed
+    const url = '${base_url}complaints/get_complaints/?addressed=true';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "title": "Lunch Break",
+              "complaint": "Our lunch break is too short",
+              "proposed_solution": "Kindly make our lunch break at least 30 minutes",
+              "addressed": false,
+              "solution": "",
+              "date": "2023-11-04T00:58:56Z",
+              "employee": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              }
+          }
+      ],
+      "message": "complaint list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No query found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting complaint list"
+        }`,
+  },
+  {
+    title: "Get Specific Complaint",
+    value: "get_specific_complaint",
+    method: "GET",
+    url: `${base_url}complaints/get_complaint/?complaint_id={id of the complaint}`,
+    request: `
+    const url = '${base_url}complaints/get_complaint/?complaint_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data":  {
+        "id": 1,
+        "title": "Lunch Break",
+        "complaint": "Our lunch break is too short",
+        "proposed_solution": "Kindly make our lunch break at least 30 minutes",
+        "addressed": false,
+        "solution": "",
+        "date": "2023-11-04T00:58:56Z",
+        "employee": {
+            "id": 4,
+            "id_no": "kos0008",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "johndoe@gmail.com",
+            "image": "/media/profile/image/avatar-1.jpg"
+        }
+    },
+    "message": "complaint details retrieved"`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid complaint ID'
+        }`,
+  },
+  {
+    title: "Edit Complaint",
+    value: "edit_complaint",
+    method: "POST",
+    url: `${base_url}complaints/edit_complaint/`,
+    request: `
+    const url = "${base_url}complaints/edit_complaint/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 1); // id of complaint to be edited
+    // items to be edited includes; addressed (true/false), solution
+    formData.append('addressed', true);
+    formData.append('solution', 'solution-to-complaint');
+    formData.append('api_token', "admin-api-token"); // admin api token
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data":  {
+        "id": 1,
+        "title": "Lunch Break",
+        "complaint": "Our lunch break is too short",
+        "proposed_solution": "Kindly make our lunch break at least 30 minutes",
+        "addressed": true,
+        "solution": "solution-to-complaint",
+        "date": "2023-11-04T00:58:56Z",
+        "employee": {
+            "id": 4,
+            "id_no": "kos0008",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "johndoe@gmail.com",
+            "image": "/media/profile/image/avatar-1.jpg"
+        }
+      },
+      "message": "complaint edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "complaint with id '1' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Complaint",
+    value: "delete_complaint",
+    method: "POST",
+    url: `${base_url}complaints/delete_complaint/`,
+    request: `
+    const url = "${base_url}complaints/delete_complaint/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 1); // id of complaint to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "complaint 'title-of-complaint' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "complaint with id '1' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Activity Log ========================= */
+  {
+    title: "Get All Activity Logs",
+    value: "get_logs",
+    method: "GET",
+    url: `${base_url}logs/get_logs/`,
+    request: `
+    const url = '${base_url}logs/get_logs/';
+    // to filter logs of an employee
+    const url = '${base_url}logs/get_logs/?employee_id={ID number of emloyee}';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 2,
+              "user": {
+                  "id": 4,
+                  "id_no": "kos0008",
+                  "first_name": "John",
+                  "last_name": "Doe",
+                  "email": "johndoe@gmail.com",
+                  "image": "/media/profile/image/avatar-1.jpg"
+              },
+              "action": "marked task \"talent hunt\" as completed",
+              "date": "2023-11-16T08:31:58.948135Z"
+          },
+          {
+              "id": 1,
+              "user": {
+                  "id": 3,
+                  "id_no": null,
+                  "first_name": "Kosmos",
+                  "last_name": "Admin",
+                  "email": "admin@gmail.com",
+                  "image": "/media/profile/image/avatar-2.jpg"
+              },
+              "action": "created a new position \"Secretary\"",
+              "date": "2023-11-16T08:31:26.357842Z"
+          }
+      ],
+      "message": "log list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 2,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No log found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 2,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting log list"
+        }`,
+  },
+  /* =========================== Notification ========================= */
+  {
+    title: "Get Notifications",
+    value: "get_notifications",
+    method: "GET",
+    url: `${base_url}notifications/get_notifications/`,
+    request: `
+    const url = '${base_url}notifications/get_notifications/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "verb": "added a new meeting End Of Week Meeting",
+              "target_ct": "meeting",
+              "created": "2023-11-09T20:12:26.650303Z"
+          }
+      ],
+      "message": "notification list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No notification found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting notification list"
+        }`,
+  },
+  {
+    title: "Delete Notification",
+    value: "delete_notification",
+    method: "POST",
+    url: `${base_url}notifications/delete_notification/`,
+    request: `
+    const url = "${base_url}notifications/delete_notification/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of notification to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "notification 'notification-content' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "notification with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Reward ========================= */
+  {
+    title: "Get Rewards",
+    value: "get_rewards",
+    method: "GET",
+    url: `${base_url}rewards/get_rewards/`,
+    request: `
+    const url = '${base_url}rewards/get_rewards/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "title": "2 Days Off",
+              "description": "A 2 days holiday off work"
+          },
+          {
+              "id": 2,
+              "title": "Vacation",
+              "description": "An all-expense paid vacation to any African country"
+          }
+      ],
+      "message": "reward list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 2,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No reward found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 0,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting reward list"
+        }`,
+  },
+  {
+    title: "Get Specific Reward",
+    value: "get_specific_reward",
+    method: "GET",
+    url: `${base_url}rewards/get_reward/?reward_id={id of the position}`,
+    request: `
+    const url = '${base_url}rewards/get_reward/?reward_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 1,
+          "title": "2 Days Off",
+          "description": "A 2 days holiday off work"
+      },
+      "message": "reward details retrieved"
+    }`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid reward ID'
+        }`,
+  },
+  {
+    title: "Create Reward",
+    value: "create_reward",
+    method: "POST",
+    url: `${base_url}rewards/create_reward/`,
+    request: `
+    const url = "${base_url}rewards/create_reward/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-reward")
+    formData.append('description', "description-of-reward")
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-reward",
+          "description": "description-of-reward"
+      },
+      "message": "reward created successfully"
+    }`,
+    error_response: `
+    // error due to existing reward
+        {
+          "status": "error",
+          "message": "reward already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Reward",
+    value: "edit_reward",
+    method: "POST",
+    url: `${base_url}rewards/edit_reward/`,
+    request: `
+    const url = "${base_url}rewards/edit_reward/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of reward to be edited
+    // items to be edited are title & description
+    formData.append('description', "description-of-edited-reward");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-reward",
+          "description": "description-of-edited-reward"
+      },
+      "message": "reward edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "reward with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Reward",
+    value: "delete_reward",
+    method: "POST",
+    url: `${base_url}rewards/delete_reward/`,
+    request: `
+    const url = "${base_url}rewards/delete_reward/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of reward to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "reward 'title-of-deleted-reward' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "reward with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  /* =========================== Bank Accounts ========================= */
+  {
+    title: "Get All Bank Accounts",
+    value: "get_bank_accounts",
+    method: "GET",
+    url: `${base_url}bank_accounts/get_bank_accounts/`,
+    request: `
+    const url = '${base_url}bank_accounts/get_bank_accounts/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+    // search is made against account name, account number & bank name
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 2,
+              "user": {
+                  "id": 3,
+                  "id_no": null,
+                  "first_name": "Kosmos",
+                  "last_name": "Admin",
+                  "email": "admin@gmail.com",
+                  "image": "/media/profile/image/avatar-2.jpg"
+              },
+              "bank": {
+                  "id": 9,
+                  "bank_name": "GTBank",
+                  "bank_code": "058"
+              },
+              "account_number": "1345678909",
+              "account_name": "Peter John"
+          }
+      ],
+      "message": "bank account list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No bank account found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 1,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting bank account list"
+        }`,
+  },
+  {
+    title: "Delete Bank Account",
+    value: "delete_bank_account",
+    method: "POST",
+    url: `${base_url}bank_accounts/delete_bank_account/`,
+    request: `
+    const url = "${base_url}bank_accounts/delete_bank_account/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of bank account to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "bank account 'account-name (account-number)' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "bank account with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+   /* =========================== Event ========================= */
+  /*{
+    title: "Get Rewards",
+    value: "get_rewards",
+    method: "GET",
+    url: `${base_url}rewards/get_rewards/`,
+    request: `
+    const url = '${base_url}rewards/get_rewards/';
+    // for pagination
+    // uses the same pagination and search pattern as other list items
+
+    ${make_get_req}`,
+    success_response: `
+    // when a list is found
+    {
+      "status": "success",
+      "data": [
+          {
+              "id": 1,
+              "title": "2 Days Off",
+              "description": "A 2 days holiday off work"
+          },
+          {
+              "id": 2,
+              "title": "Vacation",
+              "description": "An all-expense paid vacation to any African country"
+          }
+      ],
+      "message": "reward list retrieved",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 2,
+      "search_query": ""
+    }
+    
+    // when requested list is empty
+    {
+      "status": "success",
+      "message": "No reward found",
+      "page_number": 1,
+      "list_per_page": 20,
+      "total_pages": 1,
+      "total_items": 0,
+      "search_query": ""
+    }`,
+    error_response: `
+    // error due to
+        {
+          "status": "error",
+          "message": "Error getting reward list"
+        }`,
+  },
+  {
+    title: "Get Specific Reward",
+    value: "get_specific_reward",
+    method: "GET",
+    url: `${base_url}rewards/get_reward/?reward_id={id of the position}`,
+    request: `
+    const url = '${base_url}rewards/get_reward/?reward_id=1';
+    
+    ${make_get_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 1,
+          "title": "2 Days Off",
+          "description": "A 2 days holiday off work"
+      },
+      "message": "reward details retrieved"
+    }`,
+    error_response: `
+        {
+          'status': 'success',
+          'message': 'Invalid reward ID'
+        }`,
+  },
+  {
+    title: "Create Reward",
+    value: "create_reward",
+    method: "POST",
+    url: `${base_url}rewards/create_reward/`,
+    request: `
+    const url = "${base_url}rewards/create_reward/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('title', "title-of-reward")
+    formData.append('description', "description-of-reward")
+    formData.append('api_token', "admin-api-token")
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-reward",
+          "description": "description-of-reward"
+      },
+      "message": "reward created successfully"
+    }`,
+    error_response: `
+    // error due to existing reward
+        {
+          "status": "error",
+          "message": "reward already exists"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Edit Reward",
+    value: "edit_reward",
+    method: "POST",
+    url: `${base_url}rewards/edit_reward/`,
+    request: `
+    const url = "${base_url}rewards/edit_reward/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of reward to be edited
+    // items to be edited are title & description
+    formData.append('description', "description-of-edited-reward");
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "data": {
+          "id": 5,
+          "title": "title-of-reward",
+          "description": "description-of-edited-reward"
+      },
+      "message": "reward edited successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "reward with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  },
+  {
+    title: "Delete Reward",
+    value: "delete_reward",
+    method: "POST",
+    url: `${base_url}rewards/delete_reward/`,
+    request: `
+    const url = "${base_url}rewards/delete_reward/";
+
+    // form data to be created
+    const formData = new FormData();
+    formData.append('id', 5); // id of reward to be deleted
+    formData.append('api_token', "admin-api-token");
+    ${make_post_req}`,
+    success_response: `
+    {
+      "status": "success",
+      "message": "reward 'title-of-deleted-reward' deleted successfully"
+    }`,
+    error_response: `
+    // error due to invalid id
+        {
+          "status": "error",
+          "message": "reward with id '5' does not exist"
+        }
+
+        // error due to unauthorized user
+        {
+            "status": "error",
+            "message": "User not authorized"
+        }
+        
+        // error due to invalid API token
+        {
+        "status": "error",
+        "message": "invalid API token"
+        }`,
+  }, */
   // template
   {
     title: "",
