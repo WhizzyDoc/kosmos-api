@@ -3556,13 +3556,13 @@ const admin = [
         }`,
   },
    /* =========================== Event ========================= */
-  /*{
-    title: "Get Rewards",
-    value: "get_rewards",
+  {
+    title: "Get Events",
+    value: "get_events",
     method: "GET",
-    url: `${base_url}rewards/get_rewards/`,
+    url: `${base_url}events/get_events/`,
     request: `
-    const url = '${base_url}rewards/get_rewards/';
+    const url = '${base_url}events/get_events/';
     // for pagination
     // uses the same pagination and search pattern as other list items
 
@@ -3570,51 +3570,51 @@ const admin = [
     success_response: `
     // when a list is found
     {
-      "status": "success",
-      "data": [
-          {
-              "id": 1,
-              "title": "2 Days Off",
-              "description": "A 2 days holiday off work"
-          },
-          {
-              "id": 2,
-              "title": "Vacation",
-              "description": "An all-expense paid vacation to any African country"
-          }
-      ],
-      "message": "reward list retrieved",
-      "page_number": 1,
-      "list_per_page": 20,
-      "total_pages": 1,
-      "total_items": 2,
-      "search_query": ""
+        "status": "success",
+        "data": [
+            {
+                "id": 1,
+                "title": "End of Year Get Together",
+                "description": "<p>A get together party organized at the end of the year to celebrate the company's achievements so far.</p>",
+                "date": "2023-11-18T03:16:48Z",
+                "location": "The Grand Hotel, Abuja",
+                "link": null,
+                "invitation": null,
+                "directions": "<p>from anywhere, go to abuja and ask for grand hotel, lol</p>"
+            }
+        ],
+        "message": "event list retrieved",
+        "page_number": 1,
+        "list_per_page": 20,
+        "total_pages": 1,
+        "total_items": 1,
+        "search_query": ""
     }
     
     // when requested list is empty
     {
       "status": "success",
-      "message": "No reward found",
+      "message": "No event found",
       "page_number": 1,
       "list_per_page": 20,
       "total_pages": 1,
-      "total_items": 0,
+      "total_items": 1,
       "search_query": ""
     }`,
     error_response: `
     // error due to
         {
           "status": "error",
-          "message": "Error getting reward list"
+          "message": "Error getting event list"
         }`,
   },
   {
-    title: "Get Specific Reward",
-    value: "get_specific_reward",
+    title: "Get Specific Event",
+    value: "get_specific_event",
     method: "GET",
-    url: `${base_url}rewards/get_reward/?reward_id={id of the position}`,
+    url: `${base_url}events/get_event/?event_id={id of the event}`,
     request: `
-    const url = '${base_url}rewards/get_reward/?reward_id=1';
+    const url = '${base_url}events/get_event/?event_id=1';
     
     ${make_get_req}`,
     success_response: `
@@ -3622,29 +3622,39 @@ const admin = [
       "status": "success",
       "data": {
           "id": 1,
-          "title": "2 Days Off",
-          "description": "A 2 days holiday off work"
+          "title": "End of Year Get Together",
+          "description": "<p>A get together party organized at the end of the year to celebrate the company's achievements so far.</p>",
+          "date": "2023-11-18T03:16:48Z",
+          "location": "The Grand Hotel, Abuja",
+          "link": null,
+          "invitation": null,
+          "directions": "<p>from anywhere, go to abuja and ask for grand hotel, lol</p>"
       },
-      "message": "reward details retrieved"
+      "message": "event details retrieved"
     }`,
     error_response: `
         {
           'status': 'success',
-          'message': 'Invalid reward ID'
+          'message': 'Invalid event ID'
         }`,
   },
   {
-    title: "Create Reward",
-    value: "create_reward",
+    title: "Create Event",
+    value: "create_event",
     method: "POST",
-    url: `${base_url}rewards/create_reward/`,
+    url: `${base_url}events/create_event/`,
     request: `
-    const url = "${base_url}rewards/create_reward/";
+    const url = "${base_url}events/create_event/";
 
     // form data to be created
     const formData = new FormData();
-    formData.append('title', "title-of-reward")
-    formData.append('description', "description-of-reward")
+    formData.append('title', "title-of-event")
+    formData.append('description', "description-of-event")
+    formData.append('date', "date-of-event") // use date-time field instead of date-field
+    formData.append('location', "venue-of-event")
+    formData.append('link', "link-of-event") // if online link is available
+    formData.append('invitation', "image-or-document-of-invitation")
+    formData.append('directions', "directions-to-venue")
     formData.append('api_token', "admin-api-token")
     ${make_post_req}`,
     success_response: `
@@ -3652,16 +3662,21 @@ const admin = [
       "status": "success",
       "data": {
           "id": 5,
-          "title": "title-of-reward",
-          "description": "description-of-reward"
+          "title": "title-of-event",
+          "description": "<p>description-of-event</p>",
+          "date": "date-of-event",
+          "location": "venue-of-event",
+          "link": "link-of-event",
+          "invitation": null,
+          "directions": "<p>"directions-to-venue"</p>"
       },
-      "message": "reward created successfully"
+      "message": "event created successfully"
     }`,
     error_response: `
-    // error due to existing reward
+    // error due to existing event
         {
           "status": "error",
-          "message": "reward already exists"
+          "message": "event already exists"
         }
 
         // error due to unauthorized user
@@ -3677,18 +3692,18 @@ const admin = [
         }`,
   },
   {
-    title: "Edit Reward",
-    value: "edit_reward",
+    title: "Edit Event",
+    value: "edit_event",
     method: "POST",
-    url: `${base_url}rewards/edit_reward/`,
+    url: `${base_url}events/edit_event/`,
     request: `
-    const url = "${base_url}rewards/edit_reward/";
+    const url = "${base_url}events/edit_event/";
 
     // form data to be created
     const formData = new FormData();
-    formData.append('id', 5); // id of reward to be edited
-    // items to be edited are title & description
-    formData.append('description', "description-of-edited-reward");
+    formData.append('id', 5); // id of event to be edited
+    // items to be edited are title, description, location, date, link, invitation, directions
+    formData.append('description', "description-of-edited-event");
     formData.append('api_token', "admin-api-token");
     ${make_post_req}`,
     success_response: `
@@ -3696,8 +3711,13 @@ const admin = [
       "status": "success",
       "data": {
           "id": 5,
-          "title": "title-of-reward",
-          "description": "description-of-edited-reward"
+          "title": "title-of-event",
+          "description": "<p>description-of-edited-event</p>",
+          "date": "date-of-event",
+          "location": "venue-of-event",
+          "link": "link-of-event",
+          "invitation": null,
+          "directions": "<p>"directions-to-venue"</p>"
       },
       "message": "reward edited successfully"
     }`,
@@ -3705,7 +3725,7 @@ const admin = [
     // error due to invalid id
         {
           "status": "error",
-          "message": "reward with id '5' does not exist"
+          "message": "event with id '5' does not exist"
         }
 
         // error due to unauthorized user
@@ -3721,28 +3741,28 @@ const admin = [
         }`,
   },
   {
-    title: "Delete Reward",
-    value: "delete_reward",
+    title: "Delete Event",
+    value: "delete_event",
     method: "POST",
-    url: `${base_url}rewards/delete_reward/`,
+    url: `${base_url}events/delete_event/`,
     request: `
-    const url = "${base_url}rewards/delete_reward/";
+    const url = "${base_url}events/delete_event/";
 
     // form data to be created
     const formData = new FormData();
-    formData.append('id', 5); // id of reward to be deleted
+    formData.append('id', 5); // id of event to be deleted
     formData.append('api_token', "admin-api-token");
     ${make_post_req}`,
     success_response: `
     {
       "status": "success",
-      "message": "reward 'title-of-deleted-reward' deleted successfully"
+      "message": "event 'title-of-deleted-event' deleted successfully"
     }`,
     error_response: `
     // error due to invalid id
         {
           "status": "error",
-          "message": "reward with id '5' does not exist"
+          "message": "event with id '5' does not exist"
         }
 
         // error due to unauthorized user
@@ -3756,7 +3776,7 @@ const admin = [
         "status": "error",
         "message": "invalid API token"
         }`,
-  }, */
+  },
   // template
   {
     title: "",

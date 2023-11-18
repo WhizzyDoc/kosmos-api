@@ -114,66 +114,9 @@ const admin = [
     
     // for Position API
     {
-        title: "Get Available Positions",
-        value: "get_position",
-        method: "GET",
-        url: "https://kosmoshr.pythonanywhere.com/api/v1/positions/get_positions/",
-        request: `
-        // import axios if you're using a module system
-        const axios = require('axios');
         
-        const url = 'https://kosmoshr.pythonanywhere.com/api/v1/positions/get_positions/';
-        
-        // headers
-        const headers = {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-        
-        // make the request
-        axios.get(url, {
-          headers: headers
-        })
-        .then(response => {
-          // Handle the json response
-          console.log(response);
-        })
-        .catch(error => {
-          // Handle the error
-          console.error('Error: ', error);
-        })`,
-        success_response: `
-        // if position list is found
-        {
-            "status": "success",
-            "message": "position list retrieved",
-            "data": [
-                {
-                    "id": 1,
-                    "title": "Manager"
-                },
-                {
-                    "id": 2,
-                    "title": "Clerk"
-                },
-                {
-                    "id": 3,
-                    "title": "CEO"
-                }
-            ]
-        }
-        
-        //if no position is created yet
-        {
-            "status": "success",
-            "message": "No position found"
-        }`,
         error_response: `
-        // error due to
-        {
-            "status": "error",
-            "message": "Error getting position list"
-        }`,
+        `,
     },
     {
       title: "Create Position",
